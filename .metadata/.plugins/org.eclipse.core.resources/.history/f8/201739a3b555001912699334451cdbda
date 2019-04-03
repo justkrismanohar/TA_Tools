@@ -64,12 +64,12 @@ public class MarkA2TestCases extends TestCaseMarker
 		
 		for(String className : cr.getFailureCompilationArray()){
 			System.out.println(className + " does not complie");
-			m.writeRowln(className+".java"," Does not compile");
+			m.writeRowln(className," does not compile");
 		}
 
 		for(String className : cr.getSuccessCompilationArray()){
 			System.out.println(className + " complies");
-			m.writeRowln(className+".java"," Complies");
+			m.writeRowln(className," complies");
 		}
 
 	}

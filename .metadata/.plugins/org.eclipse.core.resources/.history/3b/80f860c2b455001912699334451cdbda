@@ -39,7 +39,5 @@ public abstract class Marker {
 
 	public abstract void mark();
 	
-	protected void printHeader(){
-		getMarksheet().writeRowBoldln("Test Class","Test Method","Comment");
-	}
+	protected void printHeader(){}
 }
