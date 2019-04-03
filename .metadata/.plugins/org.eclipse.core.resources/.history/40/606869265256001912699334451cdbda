@@ -89,10 +89,6 @@ public abstract class TestCaseMarker extends Marker{
         this.total -= result.getFailureCount();
         this.total -= result.getIgnoreCount();
         this.total -= testsNotExecuted;
-        
-        if(testsNotExecuted > 0){
-        	getMarksheet().writeRowBoldln("",testsNotExecuted+" tests did not complie", " Compliation errors");
-        }
 	}
 	
 	protected void markStudentCompilation(CompilationResults cr){}

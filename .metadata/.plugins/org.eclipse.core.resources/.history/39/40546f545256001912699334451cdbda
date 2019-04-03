@@ -91,7 +91,7 @@ public abstract class TestCaseMarker extends Marker{
         this.total -= testsNotExecuted;
         
         if(testsNotExecuted > 0){
-        	getMarksheet().writeRowBoldln("",testsNotExecuted+" tests did not complie", " Compliation errors");
+        	getMarksheet().writeRowBoldln("Could not exectue ",testsNotExecuted+" tests due to compliation erros");
         }
 	}
 	

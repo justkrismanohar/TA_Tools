@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public abstract class Marker {
 	
-	protected final float defaultTotalOutOf = Float.MIN_VALUE;
+	protected int defaultTotalOutOf = Integer.MIN_VALUE;
 	private Marksheet markingSlip;
 	protected float total;
 	protected float totalOutOf;
@@ -14,7 +14,6 @@ public abstract class Marker {
 		
 	public Marker(){
 		total = 0;
-		totalOutOf = defaultTotalOutOf;
 	}
 	
 	public Marker(Marksheet m){

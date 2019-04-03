@@ -79,8 +79,7 @@ public class MarkA2TestCases extends TestCaseMarker
 			System.out.println(className + " complies");
 			m.writeRowln(className+".java"," Complies");
 		}
-		
-		
+
 	}
 
 }

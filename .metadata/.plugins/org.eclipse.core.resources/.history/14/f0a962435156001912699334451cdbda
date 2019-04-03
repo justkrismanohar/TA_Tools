@@ -82,17 +82,8 @@ public abstract class TestCaseMarker extends Marker{
         resultReport(result);    		
 	
         
-        int actualTestsExecuted = result.getRunCount();
-        int testsNotExecuted = (int)(totalOutOf - actualTestsExecuted);
-        
-        this.total = (totalOutOf == defaultTotalOutOf) ? actualTestsExecuted : totalOutOf;
-        this.total -= result.getFailureCount();
-        this.total -= result.getIgnoreCount();
-        this.total -= testsNotExecuted;
-        
-        if(testsNotExecuted > 0){
-        	getMarksheet().writeRowBoldln("",testsNotExecuted+" tests did not complie", " Compliation errors");
-        }
+        this.totalOutOf = totalOutOf == defaultTotalOutOf ? result.getRunCount() : totalOutOf;
+        this.total = this.totalOutOf - result.getFailureCount() - result.getIgnoreCount();
 	}
 	
 	protected void markStudentCompilation(CompilationResults cr){}

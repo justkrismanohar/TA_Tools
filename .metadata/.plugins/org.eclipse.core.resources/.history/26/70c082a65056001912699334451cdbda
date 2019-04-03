@@ -51,8 +51,7 @@ public class MarkA2TestCases extends TestCaseMarker
 		for(String fileName : studentClassNames){
 			srcFilesToOpen +=  fileName +".java ";
 		}
-		
-		this.totalOutOf = 74;
+	
 	}
 	
 	@Override
@@ -79,8 +78,7 @@ public class MarkA2TestCases extends TestCaseMarker
 			System.out.println(className + " complies");
 			m.writeRowln(className+".java"," Complies");
 		}
-		
-		
+
 	}
 
 }
