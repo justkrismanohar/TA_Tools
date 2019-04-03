@@ -1,0 +1,15 @@
+
+public class MarkA1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String sourceDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src\\";
+		
+		A1Marker pm = new A1Marker(sourceDir);
+		//pm.markHelloWorld();
+		pm.markBookingClass();
+		pm.saveMarkingSlip();
+	}
+
+
+}

@@ -1,0 +1,9 @@
+
+public class TestComplie {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+	}
+
+}

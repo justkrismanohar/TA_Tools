@@ -1,0 +1,103 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.RandomAccessFile;
+import java.util.Arrays;
+
+import net.sf.sevenzipjbinding.ExtractOperationResult;
+import net.sf.sevenzipjbinding.IInArchive;
+import net.sf.sevenzipjbinding.ISequentialOutStream;
+import net.sf.sevenzipjbinding.SevenZip;
+import net.sf.sevenzipjbinding.SevenZipException;
+import net.sf.sevenzipjbinding.SevenZipNativeInitializationException;
+import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+import net.sf.sevenzipjbinding.simple.ISimpleInArchive;
+import net.sf.sevenzipjbinding.simple.ISimpleInArchiveItem;
+
+public class Extract {
+    public static void extract(String path, String archiveName,String fileToUnzip) throws SevenZipException, FileNotFoundException {
+    	try
+    	{
+    	   RandomAccessFile randomAccessFile = new RandomAccessFile(fileToUnzip, "r");
+    	   ISevenZipInArchive inArchive = SevenZip.openInArchive(null, new RandomAccessFileInStream(randomAccessFile));
+
+    	   ISimpleInArchive simpleInArchive = inArchive.getSimpleInterface()
+
+    	   println "${'Hash'.center(10)}|${'Size'.center(12)}|${'Filename'.center(10)}"
+    	   println "${'-'.multiply(10)}+${'-'.multiply(12)}+${'-'.multiply(10)}"
+
+    	   simpleInArchive.getArchiveItems().each
+    	   { item ->
+    	      final int[] hash = new int[1]
+    	      if (!item.isFolder())
+    	      {
+    	         final long[] sizeArray = new long[1]
+    	         ExtractOperationResult result = item.extractSlow(
+    	            new ISequentialOutStream()
+    	            {
+    	               public int write(byte[] data) throws SevenZipException
+    	               {
+    	                  //Write to file
+    	                  try
+    	                  {
+    	                     File file = new File(item.getPath())
+    	                     file.getParentFile()?.mkdirs()
+    	                     FileOutputStream fos = new FileOutputStream(file)
+    	                     fos.write(data)
+    	                     fos.close()
+    	                  }
+    	                  catch (Exception e)
+    	                  {
+    	                     printExceptionStackTrace("Unable to write file", e)
+    	                  }
+
+    	                  hash[0] ^= Arrays.hashCode(data) // Consume data
+    	                  sizeArray[0] += data.length
+    	                  return data.length // Return amount of consumed data
+    	               }
+    	            })
+    	         if (result == ExtractOperationResult.OK)
+    	         {
+    	            println(String.format("%9X | %10s | %s", 
+    	               hash[0], sizeArray[0], item.getPath()))
+    	         }
+    	         else
+    	         {
+    	            error.println("Error extracting item: " + result)
+    	         }
+    	      }
+    	   }
+    	}
+    	catch (Exception e)
+    	{
+    	   printExceptionStackTrace("Error occurs", e)
+    	   System.exit(1)
+    	}
+    	finally
+    	{
+    	   if (inArchive != null)
+    	   {
+    	      try
+    	      {
+    	         inArchive.close()
+    	      }
+    	      catch (SevenZipException e)
+    	      {
+    	         printExceptionStackTrace("Error closing archive", e)
+    	      }
+    	   }
+    	   if (randomAccessFile != null)
+    	   {
+    	      try
+    	      {
+    	         randomAccessFile.close()
+    	      }
+    	      catch (IOException e)
+    	      {
+    	         printExceptionStackTrace("Error closing file", e)
+    	      }
+    	   }
+    	}
+    }
+
+}

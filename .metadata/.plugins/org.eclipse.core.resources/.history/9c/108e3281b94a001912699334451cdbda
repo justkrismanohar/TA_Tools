@@ -1,0 +1,57 @@
+package com.ta.sample.A2;
+import com.ta.core.A1Marker;
+import com.ta.core.ManualMarker;
+import com.ta.core.TestCaseMarker;
+import com.ta.core.BatchProcess.ItemAction;
+import com.ta.sample.InsertHeader;
+import com.ta.sample.TestCaseMaker;
+import com.ta.sample.A2.MyTestSuite;
+
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
+
+import java.io.File;
+
+import org.junit.internal.TextListener;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+
+public class TestRunner extends TestCaseMarker
+{
+	
+	protected  Class[] getTestCaseClasses(){
+		
+		return new Class[] {RoomTest.class,
+ 		   ACTest.class,
+ 		   CeilingFanTest.class,
+ 		   CoolingSimulationTest.class,
+ 		   StandingFanTest.class};
+	}
+	
+    public static void main(String[] args){
+    	String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
+    	String markingSlipName = "Assignment_2_Makring_Slip.xlsx";
+    	
+    	
+        ItemAction markA1 = new ItemAction(){
+
+			@Override
+			public boolean doAction(File item) {
+				if(item.isDirectory()){
+					String filename = markingSlipName;
+					A1Marker pm = new A1Marker(item,filename);//utilty rename this
+					//pm.addMarker(new InsertHeader(item.getName()));
+					pm.addMarker(new TestRunner());
+					pm.markAll();
+					pm.saveMarkingSlip();
+					//should move files to a marked folder so don't accidentally overwrite them
+				}
+				return true;
+			}
+        	
+        };
+    }
+        
+}

@@ -1,0 +1,107 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestCaseMaker extends ManualMarker {
+
+	public static void main(String[] args){
+
+		
+	}
+	
+	public TestCaseMaker(){
+		
+		
+	}
+	
+	private List<String> loadTestCasesFromFile(){
+		List<String> cases = new ArrayList<String>();
+		BufferedReader tc;
+		try {
+			tc = new BufferedReader(new FileReader("TestCases.txt"));
+			for(String line = tc.readLine(); line!=null; line = tc.readLine())
+				System.out.println(line);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			tc.close();
+			return cases;
+		}
+	}
+	@Override
+	protected String[] getHeader() {
+		String[] header = {"Working Program and Documentation","CRITERIA","Marks","Out of","Areas/Comments"};
+		return header;
+	}
+
+	@Override
+	protected String[][][] getRowData() {
+		String[][][] rowData = 
+		{
+			{
+				{"Test case","Display list of existing rooms (no rooms)"},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Test case","Display booking grid (no rooms)"},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Test case","Display booking grid (no bookings)"},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Test case","Add a new room successfully "},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Test case","Room name checked (XXX) character "},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Test case"," "},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			}
+		};
+		
+		return rowData;
+	}
+
+	@Override
+	public void mark() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			String path = this.getMarksheet().getDirPath(); 
+			rt.exec("cmd.exe /c start test.bat \""+path+"\" RentalConsole.java RentalConsole", null, dir);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		super.mark();
+	}
+	
+	private void executeCommand(String command) {
+		
+	}
+
+
+}

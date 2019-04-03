@@ -1,0 +1,35 @@
+
+public abstract class Marker {
+	
+	private Marksheet markingSlip;
+	private float total;
+	
+	public Marker(){
+		total = 0;
+	}
+	
+	public Marker(Marksheet m){
+		markingSlip = m;
+		total = 0;
+	}
+	
+	public Marksheet getMarksheet(){
+		return markingSlip;
+	}
+	
+	public void setMarksheet(Marksheet m){
+		markingSlip = m;
+	}
+	
+	public float getTotal(){
+		return total;
+	}
+	
+	protected void addToTotal(float mark){
+		total += mark;
+	}
+	
+	public abstract void mark();
+	
+	
+}

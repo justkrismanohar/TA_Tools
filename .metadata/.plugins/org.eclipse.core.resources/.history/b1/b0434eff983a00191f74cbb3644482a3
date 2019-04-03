@@ -1,0 +1,83 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Marksheet {
+
+	private Workbook workbook;
+	private String filename;
+	private CellStyle headerStyle;
+	private Sheet sheet;
+	
+	public Marksheet(String filename){
+		Workbook workbook = new XSSFWorkbook();
+		this.filename = filename;
+		this.sheet = null;
+		
+		Font headerFont = makeFont(true, (short) 14, IndexedColors.RED);
+		headerStyle = makeCellStyle(headerFont);
+	}
+	
+	
+	public boolean createSheet(String sheetName){
+		this.sheet = workbook.createSheet(sheetName);
+		return this.sheet == null;
+	}
+	
+	public static void main(String[] args){
+		
+		Marksheet m = new Marksheet("Assignment 1 Makring Slip.xlsx");
+		
+		
+		m.createSheet("A1");
+		m.writeHeaderAtRowI(0,"STUDENT ID","Assignment 1", "COMP 2603");
+		m.writeExcelFile();
+		
+	}
+
+	private void writeExcelFile() {
+		try {
+			FileOutputStream fileOut;
+			fileOut = new FileOutputStream(filename);
+			workbook.write(fileOut);
+			fileOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeHeaderAtRowI(int i, String... values){
+		Row row = sheet.createRow(i);
+		
+	    for (int k = 0; k < values.length; k++) {
+	        Cell cell = row.createCell(k);
+	        //cell.setCellValue(columns[i]);
+	        cell.setCellValue(values[k]);
+	        //cell.setCellStyle(headerCellStyle);
+	      }
+	}
+	
+	public Font makeFont(boolean bold,short height, IndexedColors color){
+	    Font aFont = workbook.createFont();
+	    aFont.setBold(bold);
+	    aFont.setFontHeightInPoints(height);
+	    aFont.setColor(color.getIndex());
+	    return aFont;
+	}
+	
+	public CellStyle makeCellStyle(Font font){
+		CellStyle aCellStyle = workbook.createCellStyle();
+		aCellStyle.setFont(font);
+		return aCellStyle;
+	}
+}

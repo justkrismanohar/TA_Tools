@@ -1,0 +1,7 @@
+
+public class RowData {
+	private List<String> desc;
+	private String mark;
+	private List<String> comments;
+	
+}

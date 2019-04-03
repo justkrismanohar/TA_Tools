@@ -1,0 +1,33 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Marksheet {
+
+	
+	public static void main(String[] args){
+		Workbook workbook = new XSSFWorkbook();
+		
+		Sheet sheet = workbook.createSheet("A1");
+		
+
+		try {
+			FileOutputStream fileOut;
+			fileOut = new FileOutputStream("Assignment 1 Makring Slip.xlsx");
+			workbook.write(fileOut);
+			fileOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void createIthRow(Sheet sheet,int i){
+		
+	}
+}

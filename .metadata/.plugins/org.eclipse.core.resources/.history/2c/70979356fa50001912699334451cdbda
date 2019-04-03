@@ -1,0 +1,78 @@
+package com.ta.core;
+
+import java.io.File;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+public abstract class TestCaseMarker extends Marker{
+
+	
+	protected abstract Class[] getTestCaseClasses();
+	protected abstract String[] getStudentClassNames();
+	
+	private static Marksheet workingMarksheet;
+	
+	public static Marksheet getWorkingMarksheet(){
+		return workingMarksheet;
+	}
+	
+	
+	public static void resultReport(Result result) {
+	    System.out.println("Finished. Result: Failures: " +
+	      result.getFailureCount() + ". Ignored: " +
+	      result.getIgnoreCount() + ". Tests run: " +
+	      result.getRunCount() + ". Time: " +
+	      result.getRunTime() + "ms.");
+	}
+	
+	private void complieAndLoadStudentClasses(){
+		String[] classes = getStudentClassNames();
+		String dirPath = getMarksheet().getDirPath();
+		AutoMarker.clearExternallyLoadedClasses();
+		
+		loadClassesFromDir(classes, dirPath);	
+	}
+	
+	private void loadClassesFromDir(String[] classes, String dirPath) {
+		for(String className : classes){	
+			//String className = "AC";
+			String filename = className + ".java";
+			if (AutoMarker.checkIfFileExists(dirPath,filename)){
+				if(AutoMarker.canComplie(dirPath,filename)){
+					Class c = AutoMarker.getClassFromDir(dirPath, className);
+					AutoMarker.saveExternallyLoadedClass(className, c);
+				}
+				else{
+					System.out.println("Cannot complie "+ filename);
+				}
+			}
+			else{
+				System.out.println("Cannot find " + dirPath  +File.separator + filename);
+			}
+		}
+	}
+	
+	protected void copyAndComplieTestClasses(String[] testClasses){
+		String dirPath = getMarksheet().getDirPath();
+		loadClassesFromDir(testClasses, dirPath);	
+	}
+	
+	@Override
+	public void mark() {
+    	JUnitCore junit = new JUnitCore();
+    	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
+    	
+    	//bit ugly, find a better way to do this....
+    	//so Junit classes can know where to find stuff
+    	//workingMarksheet = getMarksheet();
+    	complieAndLoadStudentClasses();
+    	
+        Result result = junit.run(getTestCaseClasses());
+        resultReport(result);
+        this.totalOutOf = result.getRunCount();
+        this.total = this.totalOutOf - result.getFailureCount() - result.getIgnoreCount();
+	}
+	
+	
+}

@@ -1,0 +1,4 @@
+Class Declaration; public class Booking; 1; Missing; Incorrect; Incomplete
+Attributes; Private class Booking;1; Missing; Incorrect; Incomplete
+ ;Variable names & type (spelling, instance vs class);3;6 Correct;3-5 Correct;1-2 Correct;Not initialised in constructor (-1)
+ 

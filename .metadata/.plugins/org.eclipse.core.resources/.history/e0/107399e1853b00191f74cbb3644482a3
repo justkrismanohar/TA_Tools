@@ -1,0 +1,220 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Scanner;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Marksheet {
+
+	public static void main(String[] args){
+		
+		Marksheet m = new Marksheet(".\\","Assignment 1 Makring Slip.xlsx");		
+		m.createSheet("A1");
+		m.writeHeaderln("STUDENT ID","Assignment 1", "COMP 2603");
+		m.writeRowln("");
+		
+		m.writeHeaderln("Booking Class","CRITERIA","Marks","Out of","Areas/Comments");
+		m.displayAndWriteDescription("Class Declaration","public class Booking");
+		m.promptForMarkAndComment("/1","Missing","Incorrect","Incomplete");
+		m.writeExcelFile();
+	}
+
+	
+	private Workbook workbook;
+	private String filename;
+	private CellStyle headerStyle;
+	private CellStyle rowStyle;
+	private Sheet sheet;
+	private int currentRow; 
+	private int currentColumn;
+	private Scanner keyboard;
+	private String dir_path;
+	
+	public Marksheet(String dir_path, String filename){
+		this.workbook = new XSSFWorkbook();
+		this.dir_path = dir_path;
+		this.filename = filename;
+		this.sheet = null;
+		this.currentRow = -1;
+		this.currentColumn = -1;
+		//Default styles 
+		setHeaderStyle(true, (short) 14, IndexedColors.BLACK);
+		setRowStyle(false, (short) 12, IndexedColors.BLACK);
+		keyboard = new Scanner(System.in);
+	}
+	
+	public void displayAndWriteDescription(String... description){
+		writeRowln(description);
+		printDescription(description);
+	}
+	
+	private void printDescription(String... description){
+		for(int k =0; k<description.length;k++){
+			System.out.print(description[k]+ " ");
+		}
+		System.out.println();
+	}
+	
+	public void promptForMarkAndComment(String outOf,String... comments){
+		Row row = sheet.getRow(getCurrentRow());
+		//prompt for mark
+		System.out.print("Mark "+outOf+ ": ");
+		int mark = keyboard.nextInt();
+		writeColumn(rowStyle, row, ""+mark);
+		
+		writeColumn(rowStyle, row, outOf);
+		
+		//prompt  for comment from list for comments
+		writeColumn(rowStyle, row,promptForComment(comments));
+	}
+	
+	private int[] extractSelections(String s){
+		String[] parts = s.split(" ");
+		int [] selections = new int[parts.length];
+		return selections;
+	}
+	
+	private boolean validateSelections(int startRange, int endRange, int... selections){
+		for(int x : selections){
+			if(!(startRange<= x && x <= endRange))
+				return false;
+		}
+		return true;
+	}
+	
+	private String promptForComment(String... comments){
+		
+		do {
+			for(int k =0; k <comments.length; k++){
+				System.out.print(k+ ") "+ comments[k]+ " ");
+			}
+			System.out.println("\nEnter selection(s) space separated: ");
+			String input = keyboard.next();
+			int[] selections = extractSelections(input);
+			
+			if(!(0 <= selection && selection < comments.length)){
+				System.out.print("Please enter a valid selection\n");
+			}
+		}
+		while(!(0 <= selection && selection < comments.length));
+		
+		return comments[selection];
+	}
+	
+	private void incrementCurrentColumn(){
+		currentColumn++;
+	}
+	
+	
+	public void setCurrentRow(int i){
+		this.currentRow = i;
+	}
+	
+	public int getCurrentColumn(){
+		return this.currentColumn;
+	}
+	
+	public int getCurrentRow(){
+		return this.currentRow;
+	}
+	
+	private int incrementAndGetCurrentRow(){
+		currentRow++;
+		return currentRow;
+	}
+	
+	public void setHeaderStyle(boolean bold, short height, IndexedColors color) {
+		Font headerFont = makeFont(bold,height,color);
+		headerStyle = makeCellStyle(headerFont);
+	}
+
+	public void setRowStyle(boolean bold, short height, IndexedColors color) {
+		Font rowFont = makeFont(bold,height,color);
+		rowStyle = makeCellStyle(rowFont);
+	}
+
+	
+	public boolean createSheet(String sheetName){
+		this.sheet = workbook.createSheet(sheetName);
+		return this.sheet == null;
+	}
+	
+	private void printErrln(Object s){
+		println(true, s);
+	}
+	
+	private void println(boolean error, Object s){
+		if(error){
+			System.out.println("Error: " + s);
+		}
+		else {
+			System.out.println(s);
+		}
+	}
+	
+	public void writeExcelFile() {
+		try {
+			FileOutputStream fileOut;
+			fileOut = new FileOutputStream(dir_path+"\\"+filename);
+			workbook.write(fileOut);
+			fileOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			printErrln(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	public void writeHeaderln(String... values){
+		writeIthRow(incrementAndGetCurrentRow(), headerStyle, values);
+	}
+	
+	public void writeRowln(String... values){
+		writeIthRow(incrementAndGetCurrentRow(), rowStyle, values);
+	}
+
+	private void writeIthRow(int i, CellStyle style, String... values){
+		Row row = sheet.createRow(i);
+		setCurrentColumn(0);
+		writeColumns(style, row, values);
+	}
+
+	private void writeColumns(CellStyle style, Row row, String... values) {
+		for (int k = 0; k < values.length; k++) {
+	        writeColumn(style, row, values[k]);
+	    }
+	}
+
+	private void setCurrentColumn(int start) {
+		this.currentColumn = start;
+	}
+
+	private void writeColumn(CellStyle style, Row row, String val) {
+		Cell cell = row.createCell(getCurrentColumn());
+		cell.setCellValue(val);
+		cell.setCellStyle(style);
+		incrementCurrentColumn();
+	}
+	
+	private Font makeFont(boolean bold,short height, IndexedColors color){
+	    Font aFont = workbook.createFont();
+	    aFont.setBold(bold);
+	    aFont.setFontHeightInPoints(height);
+	    aFont.setColor(color.getIndex());
+	    return aFont;
+	}
+	
+	private CellStyle makeCellStyle(Font font){
+		CellStyle aCellStyle = workbook.createCellStyle();
+		aCellStyle.setFont(font);
+		return aCellStyle;
+	}
+}

@@ -1,0 +1,224 @@
+package com.ta.core;
+
+import java.io.File;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+import java.lang.Exception;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AutoMarker {
+	
+	private static Map<String,Class> externallyLoadedClasses;
+	
+	public static Class[] getExternallyLoadedClasses(String[] names){
+		Class[] desiredClasses = new Class[names.length];
+		for(int i=0; i < names.length; i++){
+			desiredClasses[i] = externallyLoadedClasses.get(names[i]);
+		}
+		return desiredClasses;
+	}
+	
+	public static void loadClassesFromDir(String[] classes, String dirPath) {
+		for(String className : classes){	
+			String filename = className + ".java";
+			if (AutoMarker.checkIfFileExists(dirPath,filename)){
+				if(AutoMarker.canComplie(dirPath,filename)){
+					Class c = AutoMarker.getClassFromDir(dirPath, className);
+					AutoMarker.saveExternallyLoadedClass(className, c);
+				}
+				else{
+					System.out.println("Cannot complie "+ filename);
+				}
+			}
+			else{
+				System.out.println("Cannot find " + dirPath  +File.separator + filename);
+			}
+		}
+	}
+	
+	public static void clearExternallyLoadedClasses(){
+		if(externallyLoadedClasses!=null)
+			externallyLoadedClasses.clear();
+		else
+			externallyLoadedClasses = new HashMap<String,Class>();
+	}
+	
+	public static Class getExternallyLoadedClass(String key){
+		if(externallyLoadedClasses!=null)
+			return externallyLoadedClasses.get(key);
+		return null;
+	}
+	
+	public static void saveExternallyLoadedClass(String key, Class value){
+		if(externallyLoadedClasses != null){
+			externallyLoadedClasses.put(key, value);
+		}
+		else{
+			externallyLoadedClasses = new HashMap<String,Class>();
+			externallyLoadedClasses.put(key, value);
+		}
+	}
+	
+	public static Object callMethodOnInstnace(Object instance,Method m,Object... args){
+		try {
+			if(args == null || args.length == 0)
+				return m.invoke(instance);
+			return m.invoke(instance, args);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Object callConstructor(Constructor c, Object... initargs){
+		try {
+			if(initargs.length == 0)
+				return c.newInstance();
+			return c.newInstance(initargs);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+			//should throw and error and stop execution
+			return null;
+		}
+	}
+	
+	public static Constructor getConstructor(Class c,Class... parameterTypes){
+		try {
+			return c.getDeclaredConstructor(parameterTypes);
+		} 
+		catch (NoSuchMethodException | SecurityException e) {}
+		
+		return null;
+	}
+	
+	public static Method getMethod(Class c, String methodName, Class... parameterTypes){
+		try {
+			return c.getDeclaredMethod(methodName, parameterTypes);
+		} 
+		catch (NoSuchMethodException e) {} 
+		catch (SecurityException e) {}
+		println("Error: " +methodName + " NOT found");
+		return null;	
+	}
+	
+	public static Class getClassFromDir(String dir, String className){
+	//https://stackoverflow.com/questions/6219829/method-to-dynamically-load-java-class-files
+		File file = new File(dir);
+		try {
+		    // Convert File to a URL
+		    URL url = file.toURI().toURL();          // file:/c:/myclasses/
+		    URL[] urls = new URL[]{url};
+
+		    // Create a new class loader with the directory
+		    ClassLoader cl = new URLClassLoader(urls);
+
+		    // Load in the class; MyClass.class should be located in
+		    // the directory file:/c:/myclasses/com/mycompany
+		    Class cls = cl.loadClass(className);
+		    return cls;
+		} catch (MalformedURLException e) {
+		} catch (ClassNotFoundException e) {
+		}
+		return null;
+		
+	}
+	public static Class getClass(String className){
+		try{
+			
+			return Class.forName(className);
+		} 
+		catch (ClassNotFoundException e) {}
+		//so weird! catching Exception does not work...
+		catch (NoClassDefFoundError e2){}
+		println("Error : " + className + " NOT found");
+		return null;
+	}
+	  
+//	public static boolean canComplie(String dirPath,String filename) {
+//		String sourcePath = dirPath+File.separator+filename;
+//		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+//		int compiled = compiler.run(null, null, null, sourcePath);
+//		if(compiled != 0){
+//			System.out.println("Compilation Error " + filename);
+//			return false;
+//		}
+//		return true;
+//	}
+
+	public static boolean canComplie(String dirPath,String filename) {
+		
+		String path = System.getProperty("java.class.path");
+		String sourcePath = dirPath+File.separator+filename;
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		StandardJavaFileManager fileManager=compiler.getStandardFileManager(null,null,null);
+		List<String> options=new ArrayList<String>();
+		//options.add("-cp");
+		//options.add(dirPath);
+		options.addAll(Arrays.asList("-classpath", System.getProperty("java.class.path")));
+		
+		Iterable<? extends JavaFileObject> compilationUnits=fileManager.getJavaFileObjects(dirPath+ File.separator + filename);
+		CompilationTask task=compiler.getTask(null,fileManager,null,options,null,compilationUnits);
+		boolean result = task.call();
+		return result;
+		
+//		int compiled = compiler.run(null, null, null, sourcePath);
+//		if(compiled != 0){
+//			System.out.println("Compilation Error " + filename);
+//			return false;
+//		}
+//		return true;
+	}
+	
+//	protected static boolean compileFiles(List<String> additionalOptions,ArrayList<String> sources){
+//		  JavaCompiler compiler=ToolProvider.getSystemJavaCompiler();
+//		  if (compiler == null)   return false;
+//		  StandardJavaFileManager fileManager=compiler.getStandardFileManager(null,null,null);
+//		  List<String> options=new ArrayList<String>();
+//		  options.add("-d");
+//		  options.add(getOutBuildDir().getAbsolutePath());
+//		  options.add("-s");
+//		  options.add(getOutSrcDir().getAbsolutePath());
+//		  options.add("-verbose");
+//		  if (additionalOptions != null)   options.addAll(additionalOptions);
+//		  Iterable<? extends JavaFileObject> compilationUnits=fileManager.getJavaFileObjectsFromStrings(sources);
+//		  CompilationTask task=compiler.getTask(mOutputWriter,fileManager,null,options,null,compilationUnits);
+//		  return task.call();
+//		}
+//		 
+
+	public static boolean checkIfFileExists(String dirPath, String filename){		
+		try{
+			File dir = new File(dirPath);
+			String[] files = dir.list();
+		    for(String file : files)
+		        if(file.equals(filename))
+		            return true;
+		    System.out.println(filename + " not found in "+ dirPath);
+		    return false;
+		}
+		catch (Exception e){
+			System.out.println("Dir Not found " + dirPath + " cannot search for "+filename);
+			return false;
+		}
+	}
+
+	public static void println(Object thing){
+		System.out.println(thing);
+	}
+
+}

@@ -1,0 +1,19 @@
+
+
+public class InsertHeader extends Marker {
+	
+	private String studentFolder;
+	
+	public InsertHeader(String studentFolder){
+		this.studentFolder = studentFolder;
+	}
+	@Override
+	public void mark() {
+		Marksheet markingSlip = getMarksheet();
+		markingSlip.createSheet(A1Marker.getSheetWithMarksName());
+		markingSlip.writeHeaderln("STUDENT ID","Assignment 1", "COMP 2603");
+		markingSlip.writeRowln(studentFolder);
+		markingSlip.writeRowln("");
+	}
+
+}

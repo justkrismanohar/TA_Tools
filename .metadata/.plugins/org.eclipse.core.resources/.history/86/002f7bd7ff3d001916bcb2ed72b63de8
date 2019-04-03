@@ -1,0 +1,31 @@
+
+public abstract class ManualMarker extends Marker{
+
+	protected abstract String[] getHeader();
+	protected abstract String[][][] getRowData();
+
+	@Override
+	public void mark() {
+	//Handle marking in your own way...
+		Marksheet markingSlip = getMarksheet();
+		//markingSlip.writeHeaderln("Booking Class","CRITERIA","Marks","Out of","Areas/Comments");
+		//"Booking Class","CRITERIA","Marks","Out of","Areas/Comments"
+		markingSlip.writeHeaderln(getHeader());
+		
+		String[][][] rowData = getRowData();
+		
+		float mark, outOf,totalOutOf = 0;
+		for(String[][] rowText: rowData){
+			outOf = Float.parseFloat(rowText[1][0]);
+			totalOutOf+= outOf;
+			
+			markingSlip.displayAndWriteDescription(rowText[0]);
+			
+			mark = markingSlip.getMarkAndPromptForComment(outOf,"/"+outOf,rowText[2]);
+			addToTotal(mark);
+		}
+		
+		markingSlip.writeRowln("TOTAL","",Integer.toString(getTotal()),"/"+totalOutOf);
+	}
+
+}

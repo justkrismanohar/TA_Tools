@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class MarkA1 {
+
+	public static void main(String[] args) {
+		String sourceDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src";
+		String filename = "Assignment_1_Makring_Slip-new.xlsx";
+		
+//		A1Marker pm = new A1Marker(sourceDir,filename);
+//		
+//		pm.addMarker(new InsertHeader());
+//		//pm.addMarker(new BookClassMarker());
+//		
+//		pm.markAll();
+//		pm.saveMarkingSlip();
+	}
+
+}

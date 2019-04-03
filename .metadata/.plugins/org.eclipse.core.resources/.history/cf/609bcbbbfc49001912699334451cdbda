@@ -1,0 +1,6 @@
+package com.ta.core;
+public class NoFileWithValidExtensionFoundException extends Exception{
+	public NoFileWithValidExtensionFoundException(String message){
+		super(message);
+	}
+}

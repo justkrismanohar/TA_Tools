@@ -1,0 +1,39 @@
+import java.io.File;
+
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+
+public class TestComplie {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String sourceDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src\\";
+		String sourcePath = sourceDir + "HelloWorlds.java";
+		boolean found = fileExists(sourcePath)
+		if (found){
+			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+			int compiled = compiler.run(null, null, null, sourcePath);
+			println(compiled);
+			HelloWorld hw = new HelloWorld();
+			hw.test();
+		}
+
+
+	}
+	
+	public static boolean fileExists(String path){
+		try{
+			File tmpDir = new File(path);
+			return tmpDir.exists();
+		}
+		catch (Exception e){
+			System.err.println("Does not exist "+ path);
+			return false;
+		} 
+	}
+	
+	public static void println(Object thing){
+		System.out.println(thing);
+	}
+
+}

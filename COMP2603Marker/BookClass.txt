@@ -1,0 +1,8 @@
+Class Declaration; public class Booking; 1; OK; Missing; Incorrect; Incomplete
+Attributes; Private access modifiers; 1; OK; Missing; Incorrect; Incomplete
+ ; Variable names & type (spelling, instance vs class); 3; OK; 6 Correct; 3-5 Correct;1-2 Correct; Not initialised in constructor (-1)
+ ; bookingID assigned correctly; 1; OK; Missing; Incorrect value; Fails to use class variable to assign
+Constructor; Booking(String description, int duration, int numSeating); 1; OK; Missing; Incomplete; Parameters out of order
+toString(); Method present; 1; OK; Missing; Incorrect; Incomplete
+ ; Returns ID, description, duration, location; 1; OK; 4 Correct; 2-3 Correct; 1 Correct
+Accessors & Mutators; ; 1; OK; getBookingID(); getNumSeating(); getDuration(); setLocation()

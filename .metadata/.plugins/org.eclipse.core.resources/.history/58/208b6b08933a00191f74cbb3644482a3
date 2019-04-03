@@ -1,0 +1,29 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Marksheet {
+
+	
+	public static void main(String[] args){
+		Workbook workbook = new XSSFWorkbook();
+		
+		Sheet sheet = workbook.createSheet("Contacts");
+		
+
+		FileOutputStream fileOut;
+		try {
+			fileOut = new FileOutputStream("contacts.xlsx");
+			workbook.write(fileOut);
+			fileOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}

@@ -1,0 +1,86 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class A1Marker {
+	
+	private String dirPath;
+	private Marksheet markingSlip;
+	private List<Marker> markers;
+	private File item;
+	private static String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst *.java ";
+	private static String finalTotalPrefix = "Final Total";
+	private static String sheetWithMarksName = "A1";
+	
+	private static Marksheet masterSheet = null;
+	pblic static Marksheet getMasterSheet(String dirPath,String filename){
+		if(masterSheet == null)
+			masterSheet = new Marksheet(dirPath,filename);
+		return masterSheet;
+	}
+	
+	public A1Marker(File item,String filename){
+		this.item = item;
+		this.dirPath = item.getAbsolutePath();
+		markers = new ArrayList<Marker>();
+		//markingSlip = new Marksheet(dirPath,"Assignment_1_Makring_Slip-new.xlsx");
+		markingSlip = new Marksheet(dirPath,filename);
+		//markingSlip.createSheet(sheetName)
+	}
+	
+	public void addMarker(Marker m){
+		if(markers!=null)
+			markers.add(m);
+	}
+	
+	public static String getSheetWithMarksName(){
+		return sheetWithMarksName;
+	}
+	public static String getFinalTotalPrefix(){
+		return finalTotalPrefix;
+	}
+	
+	public void markAll(){
+		
+		
+		if(markers !=null && markingSlip !=null){
+			
+			//System call to open all .java files in notepad++
+			//note real source but ok
+			//https://stackoverflow.com/questions/5028209/notepad-always-in-multi-instance/10592300
+			//System call to close all tabs in notepad++ and all .java files
+			//https://notepad-plus-plus.org/community/topic/13482/closing-all-tabs-prior-to-starting-editor/2
+			openJavaFilesInNotepad();
+			float totalMark = 0, totalOutOf = 0;
+			for(Marker m : markers){
+				m.setMarksheet(markingSlip);
+				m.mark();
+				totalMark += m.getTotal();
+				totalOutOf += m.getTotalOutOf();
+			}
+			
+			markingSlip.writeRowln("",getFinalTotalPrefix(),Float.toString(totalMark),"/"+Float.toString(totalOutOf));
+			
+		}
+	}
+	
+	
+
+	private void openJavaFilesInNotepad() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			rt.exec("cmd.exe /c "+openFilesCmd, null, new File(item.getAbsolutePath()));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveMarkingSlip(){
+		if(markingSlip!=null){
+			markingSlip.writeExcelFile();
+		}
+	}
+
+}

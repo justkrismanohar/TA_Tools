@@ -1,0 +1,73 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestCaseMaker extends ManualMarker {
+
+	public TestCaseMaker(String name, String filename){
+		super(name,filename);
+		testCases = new ArrayList<RowData>();
+	}
+	
+	@Override
+	protected void loadRowData(String filename){
+		RowData r1 = new RowData();
+		r1.addDesc("No compilation errors");
+		r1.addDesc(" ");
+		r1.setMark("5");
+		r1.addComment("OK");
+		r1.addComment("Numerous compilation errors");
+		r1.addComment("Simple compilation errors");
+		r1.addComment("Missing classes");
+		testCases.add(r1);
+		
+		RowData r2 = new RowData();
+		r2.addDesc("Program executes successfully");
+		r2.addDesc(" ");
+		r2.setMark("5");
+		r2.addComment("OK");
+		r2.addComment("RentalConsole main() method fails");
+		testCases.add(r2);
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			//testCases = new ArrayList<RowData>();
+			
+			for(String line = br.readLine(); line!=null; line = br.readLine()){
+				RowData row = new RowData();
+				row.addDesc("Test Case");
+				row.addDesc(line);
+				row.setMark("0.5");
+				row.addComment("OK");
+				row.addComment("Missing");
+				row.addComment("Incorrect");
+				row.addComment("Incomplete");
+				testCases.add(row);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void mark() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			String path = this.getMarksheet().getDirPath(); 
+			rt.exec("cmd.exe /c start test.bat \""+path+"\" RentalConsole.java RentalConsole", null, dir);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		super.mark();
+	}
+}

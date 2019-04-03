@@ -1,0 +1,3 @@
+public interface ItemAction{
+	public boolean doAction(File item);
+}

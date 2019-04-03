@@ -1,0 +1,96 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class BookClassMarker extends ManualMarker{
+
+	private List<RowData> testCases;
+	
+	private void loadRowData(){
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("BookClass.txt"));
+			testCases = new ArrayList<RowData>();
+			
+			for(String line = br.readLine(); line!=null; line = br.readLine()){
+				String[] parts = line.split(";");
+				
+				RowData row = new RowData();
+				row.addDesc(parts[0]);
+				row.addDesc(parts[1]);
+				row.setMark(parts[2]);
+				for(int k = 3; k < parts.length; k++)
+					row.addComment(parts[k]);
+//				row.addComment("OK");
+//				row.addComment("Missing");
+//				row.addComment("Incorrect");
+//				row.addComment("Incomplete");
+				
+				testCases.add(row);
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected String[] getHeader() {
+		String[] header = {"Booking Class","CRITERIA","Marks","Out of","Areas/Comments"};
+		return header;
+	}
+	
+	protected List<RowData> getRowData(){
+		return this.testCases;
+	}
+	
+	@Override
+	protected String[][][] getRowData() {
+		String[][][] rowData = 
+		{
+			{
+				{"Class Declaration","public class Booking"},
+				{"1"},
+				{"Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"Attributes","Private class Booking"},
+				{"1"},
+				{"Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"","Variable names & type (spelling, instance vs class)"},
+				{"3"},
+				{"6 Correct","3-5 Correct","1-2 Correct","Not initialised in constructor (-1)"}
+			},
+			{
+				{"","bookingID assigned correctly"},
+				{"1"},
+				{"Missing","Incorrect value","Fails to use class variable to assign"}
+			},
+			{
+				{"Constructor","Booking(String description, int duration, int numSeating)"},
+				{"1"},
+				{"Missing","Incomplete","Parameters out of order"}
+			},
+			{
+				{"toString()","Method present"},
+				{"1"},
+				{"Missing","Incorrect","Incomplete"}
+			},
+			{
+				{"","Returns ID, description, duration, location"},
+				{"1"},
+				{"4 Correct","2-3 Correct","1 Correct"}
+			},
+			{
+				{"Accessors & Mutators",""},
+				{"1"},
+				{"getBookingID()","getNumSeating()","getDuration()","setLocation()"}
+			}
+		};
+		
+		return rowData;
+	}
+}

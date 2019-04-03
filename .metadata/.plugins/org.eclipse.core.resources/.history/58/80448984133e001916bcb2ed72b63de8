@@ -1,0 +1,54 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestCaseMaker extends ManualMarker {
+
+
+	@Override
+	protected String[] getHeader() {
+		String[] header = {"Working Program and Documentation","CRITERIA","Marks","Out of","Areas/Comments"};
+		return header;
+	}
+
+	@Override
+	protected void getRowData() {
+		List<List<List<String>>> rowData = 
+		{
+			{
+				{"Test case","Display list of existing rooms (no rooms)"},
+				{"0.5"},
+				{"OK", "Missing","Incorrect","Incomplete"}
+			}
+		};
+		
+		return rowData;
+	}
+
+	@Override
+	public void mark() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			String path = this.getMarksheet().getDirPath(); 
+			rt.exec("cmd.exe /c start test.bat \""+path+"\" RentalConsole.java RentalConsole", null, dir);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		super.mark();
+	}
+	
+	private void executeCommand(String command) {
+		
+	}
+
+
+}

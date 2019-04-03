@@ -1,0 +1,19 @@
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+
+public class TestComplie {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String sourcePath = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src\\";
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		int compiled = compiler.run(null, null, null, sourcePath+"wHelloworld.java");
+		println(compiled);
+
+	}
+	
+	public static void println(Object thing){
+		System.out.println(thing);
+	}
+
+}

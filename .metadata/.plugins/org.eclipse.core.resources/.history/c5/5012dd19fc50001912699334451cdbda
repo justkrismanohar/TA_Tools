@@ -1,0 +1,62 @@
+package com.ta.core;
+
+import java.io.File;
+
+public abstract class Marker {
+	
+	private Marksheet markingSlip;
+	protected float total;
+	protected float totalOutOf;
+	
+		
+	public Marker(){
+		total = 0;
+	}
+	
+	public Marker(Marksheet m){
+		markingSlip = m;
+		total = 0;
+	}
+	public Marksheet getMarksheet(){
+	
+		return markingSlip;
+	}
+	
+	public void setMarksheet(Marksheet m){
+		markingSlip = m;
+	}
+	
+	public float getTotal(){
+		return total;
+	}
+	
+	protected void addToTotal(float mark){
+		total += mark;
+	}
+	
+	public float getTotalOutOf(){
+		return totalOutOf;
+	}
+
+	public abstract void mark();
+
+	protected void loadClassesFromDir(String[] classes, String dirPath) {
+		for(String className : classes){	
+			//String className = "AC";
+			String filename = className + ".java";
+			if (AutoMarker.checkIfFileExists(dirPath,filename)){
+				if(AutoMarker.canComplie(dirPath,filename)){
+					Class c = AutoMarker.getClassFromDir(dirPath, className);
+					AutoMarker.saveExternallyLoadedClass(className, c);
+				}
+				else{
+					System.out.println("Cannot complie "+ filename);
+				}
+			}
+			else{
+				System.out.println("Cannot find " + dirPath  +File.separator + filename);
+			}
+		}
+	}
+	
+}

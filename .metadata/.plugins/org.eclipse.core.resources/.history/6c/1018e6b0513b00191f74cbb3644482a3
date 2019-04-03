@@ -1,0 +1,58 @@
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class A1Marker {
+	
+	private String dirPath;
+	private Marksheet markingSlip;
+	
+	public A1Marker(String sourceDir){
+		this.dirPath = sourceDir;
+		initMarkingSheet(".\\","Assignment 1 Makring Slip.xlsx");
+	}
+	
+	public void markBookingClass(){
+		
+	}
+	
+	private void initMarkingSheet(String dirPath, String filename){
+		markingSlip = new Marksheet(dirPath,filename);		
+		markingSlip.createSheet("A1");
+		markingSlip.writeHeaderln("STUDENT ID","Assignment 1", "COMP 2603");
+		markingSlip.writeRowln("");
+	}
+	
+	public void saveMarkingSlip(){
+		if(markingSlip!=null){
+			markingSlip.writeExcelFile();
+		}
+	}
+	public void markHelloWorld() {
+		String filename = "HelloWorld.java";
+		if (AutoMarker.checkIfFileExists(dirPath,filename)){
+			if(AutoMarker.canComplie(dirPath,filename)){
+				testHelloWorld();
+			}
+		}
+	}
+	
+	public void testHelloWorld() {
+		
+		Class c = AutoMarker.getClass("HelloWorld");
+		System.out.println(c);
+				
+		Constructor construct = AutoMarker.getConstructor(c);
+		System.out.println(construct);
+		
+		Object instance = AutoMarker.callConstructor(construct);
+		System.out.println(instance);
+		
+		Method m = AutoMarker.getMethod(c, "testInt", String.class,int.class);
+		System.out.println(m);
+		
+		AutoMarker.callMethodOnInstnace(instance, m, "Hi Args! Cool!",1);
+	}
+
+
+}

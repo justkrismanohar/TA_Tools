@@ -1,0 +1,23 @@
+package com.ta.core;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class CompilationResults {
+	//TO DO Need a better way to do this
+	public static String CANNOT_COMPILE = "Cannot complie";
+	public static String COMPLIES = "Compiles";
+	public static String FILE_NOT_FOUND = "File not found";
+	
+	private Map<String,String> complilationResults;
+	
+	public CompilationResults(){
+		this.complilationResults = new HashMap<String,String>();
+	}
+	
+	public void put(String key,String value){
+		this.complilationResults.put(key, value);
+	}
+	
+	
+}

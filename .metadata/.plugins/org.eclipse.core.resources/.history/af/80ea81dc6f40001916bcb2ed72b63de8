@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Sati {
+
+	private static Scanner keyboard;
+	public static void main(String[] args) {
+		keyboard = new Scanner(System.in);
+		int a = getNumber();
+		int b = getNumber();
+		int answer = add(a, b);
+		println(a + " + "+ b + " = " + answer);
+	}
+	
+	public static int add(int a, int b){
+		return a +b;
+	}
+	
+	public static int getNumber(){
+		System.out.println("Please enter a number :");
+		int num = keyboard.nextInt();
+		keyboard.nextLine();
+		return num;
+	}
+
+	public static void println(Object s){
+		System.out.println(s);
+	}
+	
+}

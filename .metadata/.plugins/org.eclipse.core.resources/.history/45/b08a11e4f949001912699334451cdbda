@@ -1,0 +1,10 @@
+
+public class TestCaseMarker extends Marker{
+
+	@Override
+	public void mark() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

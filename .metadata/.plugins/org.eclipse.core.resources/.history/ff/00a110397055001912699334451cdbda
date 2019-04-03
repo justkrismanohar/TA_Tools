@@ -1,0 +1,41 @@
+package com.ta.core;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CompilationResults {
+	//TO DO Need a better way to do this
+	public static String CANNOT_COMPILE = "Cannot complie";
+	public static String COMPLIES = "Compiles";
+	public static String FILE_NOT_FOUND = "File not found";
+	
+	private Map<String,String> complilationResults;
+	private List<String> success, failure,fileNotFound;
+	public CompilationResults(){
+		this.complilationResults = new HashMap<String,String>();
+		this.success = new ArrayList<String>();
+		this.failure = new ArrayList<String>();
+	}
+	
+	public void recordSuccess(String key, String value){
+		this.put(key, value);
+		success.add(key);
+	}
+	
+	public void recordFailure(String key, String value){
+		this.put(key, value);
+		failure.add(key);
+	}
+	
+	public void recordFileNotFound(String key, String value){
+		this.put(key, value);
+		fileNotFound.add(key);
+	}
+	
+	public void put(String key,String value){
+		this.complilationResults.put(key, value);
+	}
+	
+}

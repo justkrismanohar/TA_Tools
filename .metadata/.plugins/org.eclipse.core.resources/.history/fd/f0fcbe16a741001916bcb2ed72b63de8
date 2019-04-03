@@ -1,0 +1,5 @@
+TO DO;
+
+1. Fix issue of accidentally entering illegal characters (and hitting enter). This crashes the program
+2. Copy completed files to a SAFE location, so does not accidentally get overwritten.
+3. Generate marksheet, from excel files in folder

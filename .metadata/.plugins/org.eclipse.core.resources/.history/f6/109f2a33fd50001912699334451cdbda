@@ -1,0 +1,52 @@
+
+import com.ta.core.MarkingProcess;
+import com.ta.core.ManualMarker;
+import com.ta.core.TestCaseMarker;
+import com.ta.core.BatchProcess.ItemAction;
+import com.ta.sample.InsertHeader;
+import com.ta.sample.TestCaseMaker;
+
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
+
+import java.io.File;
+
+import org.junit.internal.TextListener;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+
+public class MarkA2TestCases extends TestCaseMarker
+{
+	
+	public MarkA2TestCases(String sourceDir) {
+		super(sourceDir);
+	}
+	
+	protected  Class[] getTestCaseClasses(){
+		
+		String[] testClasses = {"ACTest"};
+		
+		copyAndComplieTestClasses(testClasses);
+		
+		return new Class[] {
+//		   RoomTest.class,
+// 		   ACTest.class,
+// 		   CeilingFanTest.class,
+// 		   CoolingSimulationTest.class,
+// 		   StandingFanTest.class
+		   ACTest.class
+		};
+	}
+
+	@Override
+	protected String[] getStudentClassNames() {
+	
+		return new String[] {
+				"AC",
+				"Room"
+		};
+	}
+
+}

@@ -1,0 +1,45 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Sati {
+
+	private static Scanner keyboard;
+	public static void main(String[] args) {
+		keyboard = new Scanner(System.in);
+//		int a = getNumber();
+//		int b = getNumber();
+//		int answer = add(a, b);
+//		println(a + " + "+ b + " = " + answer);
+		println("Get me a ");
+		String thing = keyboard.nextLine();
+		println("Ok I will get you a " + thing);
+		println("....");
+		
+		String [] responses = {
+				"Here is your ",
+				"Wow that is a good idea! I have ordered your ",
+				"Nah....I don't know how to get you your "
+		};
+		
+		Random future = new Random();
+		int choice = future.nextInt(3);
+		
+		println(responses[choice]+thing+"!!!!");
+	}
+	
+	public static int add(int a, int b){
+		return a +b;
+	}
+	
+	public static int getNumber(){
+		System.out.println("Please enter a number :");
+		int num = keyboard.nextInt();
+		keyboard.nextLine();
+		return num;
+	}
+
+	public static void println(Object s){
+		System.out.println(s);
+	}
+	
+}

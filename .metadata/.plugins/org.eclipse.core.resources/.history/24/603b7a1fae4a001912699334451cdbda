@@ -1,0 +1,5 @@
+
+package com.ta.sample.A2;
+public interface PortableDevice{
+   
+}

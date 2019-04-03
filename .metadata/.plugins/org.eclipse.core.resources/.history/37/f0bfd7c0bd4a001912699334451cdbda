@@ -1,0 +1,32 @@
+package com.ta.core;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
+import com.ta.sample.A2.JUnitExecutionListener;
+
+public abstract class TestCaseMarker extends Marker{
+
+	
+	protected abstract Class[] getTestCaseClasses();
+	
+	public static void resultReport(Result result) {
+	    System.out.println("Finished. Result: Failures: " +
+	      result.getFailureCount() + ". Ignored: " +
+	      result.getIgnoreCount() + ". Tests run: " +
+	      result.getRunCount() + ". Time: " +
+	      result.getRunTime() + "ms.");
+	}
+	
+	@Override
+	public void mark() {
+    	JUnitCore junit = new JUnitCore();
+    	junit.addListener(new JUnitExecutionListener(System.out));
+        Result result = junit.run(getTestCaseClasses());
+        resultReport(result);
+        this.totalOutOf = result.getRunCount();
+        this.total = this.totalOutOf - result.getFailureCount() - result.getIgnoreCount();
+	}
+	
+	
+}

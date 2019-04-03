@@ -1,0 +1,30 @@
+package com.ta.sample.A2;
+import com.ta.core.TestCaseMarker;
+import com.ta.sample.A2.MyTestSuite;
+
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
+
+import org.junit.internal.TextListener;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+
+public class TestRunner extends TestCaseMarker
+{
+	
+	protected  Class[] getTestCaseClasses(){
+		
+		return new Class[] {RoomTest.class,
+ 		   ACTest.class,
+ 		   CeilingFanTest.class,
+ 		   CoolingSimulationTest.class,
+ 		   StandingFanTest.class};
+	}
+	
+    public static void main(String[] args){
+   
+    }
+        
+}

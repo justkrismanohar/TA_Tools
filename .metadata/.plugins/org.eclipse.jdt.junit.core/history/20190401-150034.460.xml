@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ACTest (2)" project="COMP2603-A2-Test-Student" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="ACTest" time="0.016">
+    <testcase name="testTurnOff" classname="ACTest" time="0.011"/>
+    <testcase name="testCools" classname="ACTest" time="0.001"/>
+    <testcase name="testACBreeziness" classname="ACTest" time="0.0"/>
+    <testcase name="testACNoisiness" classname="ACTest" time="0.0"/>
+    <testcase name="testACCreationID" classname="ACTest" time="0.0"/>
+    <testcase name="testIsDevice" classname="ACTest" time="0.0"/>
+    <testcase name="testIsPortableDevice" classname="ACTest" time="0.002"/>
+    <testcase name="testACisBreezy" classname="ACTest" time="0.0"/>
+    <testcase name="testACCreateIDIncrement" classname="ACTest" time="0.0"/>
+    <testcase name="testAC_isNoisy" classname="ACTest" time="0.0"/>
+    <testcase name="testTurnOn" classname="ACTest" time="0.002"/>
+  </testsuite>
+</testrun>

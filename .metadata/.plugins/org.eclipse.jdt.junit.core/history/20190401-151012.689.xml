@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CeilingFanTest" project="COMP2603-A2-Test-Student" tests="14" started="14" failures="0" errors="0" ignored="0">
+  <testsuite name="CeilingFanTest" time="0.0">
+    <testcase name="setUpClass" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCFCreationID" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCools" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testIsFan" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCeilingFanBreeziness" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCeilingFanisNoisy" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testSFCreateIDIncrement" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCeilingFanNoisiness" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testOnOffDefaultState" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testIsDevice" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testIsPortableDevice" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testOnOffTurnOn" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testOnOffTurnOnThenOff" classname="CeilingFanTest" time="0.0"/>
+    <testcase name="testCeilingisBreezy" classname="CeilingFanTest" time="0.0"/>
+  </testsuite>
+</testrun>

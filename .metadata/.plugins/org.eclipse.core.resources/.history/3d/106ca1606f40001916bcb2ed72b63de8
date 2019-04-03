@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class Sati {
+
+	private static Scanner keyboard;
+	public static void main(String[] args) {
+		keyboard = new Scanner(System.in);
+		int a = getNumber();
+	}
+	
+	public static int getNumber(){
+		System.out.println("Please enter a number :");
+		int num = keyboard.nextInt();
+		keyboard.nextLine();
+		return num;
+	}
+
+	public static void println(Object s){
+		System.out.println(s);
+	}
+	
+}

@@ -1,0 +1,142 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Arrays;
+
+import net.sf.sevenzipjbinding.IInArchive;
+import net.sf.sevenzipjbinding.SevenZip;
+import net.sf.sevenzipjbinding.SevenZipException;
+import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
+import net.sf.sevenzipjbinding.simple.ISimpleInArchiveItem;
+
+public class BatchProcess {
+
+	private static String[] archiveFormats = {"zip","rar",".7z"};
+	
+	public static void main(String[] args) {
+		
+		try {
+            File file = new File("C:\\Users\\krism\\Downloads\\Kris");
+            if(listContents(file)){
+            	System.out.println("All archives OK");
+            }
+            else{
+            	System.out.println("Fix archive");
+            	System.exit(1);
+            }
+     
+        }catch(Exception e) {
+            System.err.println("Error!");
+        }
+
+	}
+	
+	private static boolean openArchive(String archiveFilename) {
+        RandomAccessFile randomAccessFile = null;
+        IInArchive inArchive = null;
+        
+        try {        
+		    randomAccessFile = new RandomAccessFile(archiveFilename, "r");
+		    
+		    inArchive = SevenZip.openInArchive(null, // Choose format automatically
+		            new RandomAccessFileInStream(randomAccessFile));
+		    
+		    System.out.println("Opened "+archiveFilename);
+		    
+		    return true;
+        }
+        catch (Exception e) {
+        	System.err.println(archiveFilename);
+            System.err.println("Error occurs: " + e);
+            return false;
+        } 
+        finally {
+            if (inArchive != null) {
+                try {
+                    inArchive.close();
+                } catch (SevenZipException e) {
+                    System.err.println("Error closing archive: " + e);
+                }
+            }
+            if (randomAccessFile != null) {
+                try {
+                    randomAccessFile.close();
+                } catch (IOException e) {
+                    System.err.println("Error closing file: " + e);
+                }
+            }
+        }
+	}
+	
+	private static boolean isAnAllowedArchive(String filename){
+		String[] parts = filename.split("\\.");//escape dot in regex. Otherwise . means any char
+		
+		int lenght = parts.length;
+		if(lenght >0){
+			String ext = parts[parts.length-1];	
+			for(String allowedFormat : archiveFormats){
+				if(ext.equals(allowedFormat))
+					return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private static boolean listContents(File file){
+		try {
+			if(file.isDirectory()){
+				File[] contents = file.listFiles();
+				for(File item : contents){
+			    	if(item.isDirectory() && !listContents(item))
+			    		return false;
+			    	else if(isAnAllowedArchive(item.getName())){
+			    		//System.out.println(item.getParentFile().getName()+"\\"+item.getName());
+			    		//return openArchive(item.getAbsolutePath());
+			    		//Extract.extract(item.getAbsolutePath());
+			    		//Extract.extract("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src\\output", item.getAbsolutePath());
+			    		Extract.extract("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\src\\output\\"+item.getParentFile().getName(), item.getAbsolutePath());
+			    	}
+				}
+			}
+			else if(isAnAllowedArchive(file.getName())){
+		    		System.out.println(".\\"+file.getName());
+			}
+                
+        }catch(Exception e) {
+            System.err.println("Error!");
+            e.printStackTrace();
+            return false;
+        }	
+		
+		return true;
+	}
+	
+//	public static void main(String[] args) {
+//		
+//		try {
+//            File file = new File("C:\\Users\\krism\\Downloads\\Kris");
+//            
+//            String[] directories = file.list(new FilenameFilter() {
+//              @Override
+//              public boolean accept(File current, String name) {
+//            	
+//                return new File(current, name).isDirectory();
+//              }
+//            });
+//            
+//            for(int i = 0;i < directories.length;i++) {
+//                if(directories[i] != null) {
+//                    System.out.println(Arrays.asList(directories[i]));
+//
+//                }
+//            }
+//        }catch(Exception e) {
+//            System.err.println("Error!");
+//        }
+//
+//	}
+
+}

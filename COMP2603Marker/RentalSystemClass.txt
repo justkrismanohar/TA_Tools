@@ -1,0 +1,20 @@
+ Attributes; rooms Array; 1; OK; Incorrect access modifier; Not initialised in constructor
+ ; numRooms; 1; OK; Incorrect access modifier; Not initialised in constructor
+addRoom(String name, int seatingCapacity) (3 marks); Maximum 10 rooms allowed; 1; OK; Missing; Incorrect; Incomplete
+ ; Room object created and numRooms incremented; 1; OK; Missing; Incorrect; Incomplete
+ ; Correct messages returned; 1; OK; Missing; Incorrect; Incomplete
+ getRoomList( ) (3 marks); Traversal of room array until empty slot; 1; OK; Missing; Incorrect; Incomplete
+ ; Room details appended and returned if rooms exist; 1; OK; Missing; Incorrect; Incomplete
+ ; Message if no rooms; 1; OK; Missing; Incorrect; Incomplete
+ addBooking(String description, int duration, int numSeating) (4 marks); check for seating capacity; 1; OK; Missing; Incorrect; Incomplete
+ ; check for free time slots; 1; OK; Missing; Incorrect; Incomplete
+ ; add booking to first appropriate room; 1; OK; Missing; Incorrect; Incomplete
+ ; Appropriate return messages; 1; OK; Missing; Incorrect; Incomplete
+getBooking(int bookingID) (3 marks); use of hasBooking() or appropriate logic; 1; OK; Missing; Incorrect; Incomplete
+ ; use of getBookingDetails(); 1; OK; Missing; Incorrect; Incomplete
+ ; Appropriate return messages; 1; OK; Missing; Incorrect; Incomplete
+getBookingsByRoom(String roomID) (3 marks); .equals(..) for roomIDcomparison; 1; OK; Missing; Incorrect; == used
+ ; use of getBookingList( ); 1; OK; Missing; Incorrect; Incomplete
+ ; Appropriate return messages; 1; OK; Missing; Incorrect; Incomplete
+getBookingGrid( ) (2 marks); use of getDetailedBookingGrid( ) per room; 1; OK; Missing; Incorrect; Incomplete
+ ; Appropriate return messages; 1; OK; Missing; Incorrect; Incomplete

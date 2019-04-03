@@ -1,0 +1,20 @@
+Display list of existing rooms (no rooms)
+Display booking grid (no rooms) 
+Display booking grid (no bookings)
+Add a new room successfully 
+Room name checked (XXX) character 
+Display bookings by Room (empty)
+Display list of existing rooms (some rooms)
+Create a new booking successfully
+Bookings inserted correctly (8 hour)
+Bookings inserted correctly (5, 8, 3 hour)
+Bookings inserted correctly (1, 2, 1 hour)
+Display booking grid (1-9 bookings)
+Display bookings by Room (some bookings)
+Invalid bookings rejected (duration =0)
+Bookings rejected (lack of seats) 
+Booking rejected (no free rooms)
+Retrieve an existing booking by ID
+Reject search for booking by ID (invalid)
+Display booking grid (10+ bookings)
+Maximum 10 Rooms allowed 

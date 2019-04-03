@@ -1,0 +1,29 @@
+package com.ta.sample.A2;
+import com.ta.sample.A2.MyTestSuite;
+
+import junit.framework.TestSuite;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+
+public class TestRunner
+{
+    public static void main(String[] args){
+        
+    	TestSuite suite = new TestSuite();
+    	suite.addTestSuite(RoomTest.class);
+    	
+    	Result result = JUnitCore.runClasses(MyTestSuite.class);
+        int failCount = result.getFailureCount();
+        System.out.println(result.getRunCount()-failCount);
+
+              //for (Failure failure : result.getFailures()) {
+              //    System.out.println(failure.toString());
+      //}
+        
+     //System.out.println(result.wasSuccessful());
+    }
+        
+}

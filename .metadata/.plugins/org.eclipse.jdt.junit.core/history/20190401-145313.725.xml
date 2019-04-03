@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StandingFanTest" project="COMP2603-A2-Test-Student" tests="14" started="14" failures="0" errors="0" ignored="0">
+  <testsuite name="StandingFanTest" time="0.001">
+    <testcase name="setUpClass" classname="StandingFanTest" time="0.001"/>
+    <testcase name="testStandingFanIsBreezy" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testCools" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testIsFan" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testSFCreateIDIncrement" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testOnOffDefaultState" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testIsDevice" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testIsPortableDevice" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testOnOffTurnOn" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testSFCreationID" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testStandingFanNoisiness" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testStandingFanIsNoisy" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testStandingFanBreeziness" classname="StandingFanTest" time="0.0"/>
+    <testcase name="testOnOffTurnOnThenOff" classname="StandingFanTest" time="0.0"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,20 @@
+import java.util.Scanner;
+
+public class Sati {
+
+	private static Scanner keyboard;
+	public static void main(String[] args) {
+		keyboard = new Scanner(System.in);
+		println("Do you sell satyas?");
+		println("Why yess is do!");
+	}
+	
+	public int getNumber(){
+		
+	}
+
+	public static void println(Object s){
+		System.out.println(s);
+	}
+	
+}

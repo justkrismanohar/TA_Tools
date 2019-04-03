@@ -1,0 +1,89 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+public class COMP1602Copiers extends BatchProcess{
+	
+	public static void main(String[] args) {
+		
+		//TODO pull from a config file 
+		String[] archiveFormats = {"zip","rar",".7z"};
+		String[] format = {"cpp"};
+		String sourceDir = "C:\\Users\\krism\\Downloads\\OneDrive-2019-03-12";
+		String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\comp1602-copiers";
+		
+		ItemAction validateZip = new ItemAction(){
+
+			@Override
+			public boolean doAction(File item) {
+		    	if(item.isDirectory())
+		    		return performActionInFile(item,this);
+		    	else if(isAnAllowedArchive(item.getName(),archiveFormats)){
+		    		return openArchive(item.getAbsolutePath());
+		    	}
+//		    	else{
+//			    	System.out.println(item.getName() +" is not an allowed acrhive.");
+//			    	return false;
+//		    	}
+		    	return true;
+			}
+        	
+        };
+        
+        ItemAction extractArchive = new ItemAction(){
+
+			@Override
+			public boolean doAction(File item) {
+		    	if(item.isDirectory())
+		    		return performActionInFile(item,this);
+		    	else if(isAnAllowedArchive(item.getName(),archiveFormats)){
+		    		try{	
+		    			String cleanItemName = Extract.cleanFileName(item.getParentFile().getName());
+		    			
+						Extract.extractForMoss(outputDir,cleanItemName, item.getAbsolutePath(),format);
+						return true;
+					}
+					catch(Exception e){
+						System.err.println("Error Extracting");
+						System.err.println(item.getAbsolutePath());
+						e.printStackTrace();
+						return false;
+					}
+		    	}
+		    	else if(Extract.isAnAllowedItem(item.getPath(), format)){
+		    		//https://stackoverflow.com/questions/16433915/how-to-copy-file-from-one-location-to-another-location
+		    		Files.copy(item.toPath(),(new File(outputDir+File.separator+item.getName()).toPath(),StandardCopyOption.REPLACE_EXISTING);	    			
+		    		//System.err.println("Not Archieved  "+ item.getName());
+		    	}
+		    	
+		    	return true;
+			}
+
+
+        };
+                
+		try {
+            File file = new File(sourceDir);
+            //if(performActionInFile(file,validateZip)){
+            //	System.out.println("All archives OK");
+            	//proceed with other actions
+             	if(performActionInFile(file, extractArchive)){
+            		System.out.println("All archives extracted OK");
+            //		performActionInFile(new File(outputDir), markA1);
+            		//performActionInFileFromStartToEnd(new File(outputDir), markA1,0,-1);
+            		//System.out.println("Finished Marking");
+            
+            	}
+            //}
+           // else{
+           // 	System.out.println("Fix archive");
+           // 	System.exit(1);
+           // }
+     
+        }catch(Exception e) {
+            System.err.println("Error!");
+        }
+
+	}
+
+}

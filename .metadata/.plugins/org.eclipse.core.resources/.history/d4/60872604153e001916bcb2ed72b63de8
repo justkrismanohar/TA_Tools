@@ -1,0 +1,14 @@
+import java.util.List;
+
+public class RowData {
+	private List<String> desc;
+	private String mark;
+	private List<String> comments;
+	
+	public RowData(){
+		desc = new ArrayList<String>();
+		mark ="";
+		comments = new ArrayList<String>();
+	}
+	
+}

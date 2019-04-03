@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ACTest" project="COMP2603Marker" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="com.ta.sample.A2.ACTest" time="0.003">
+    <testcase name="testTurnOff" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testCools" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testACBreeziness" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testACNoisiness" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testACCreationID" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testIsDevice" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testIsPortableDevice" classname="com.ta.sample.A2.ACTest" time="0.001"/>
+    <testcase name="testACisBreezy" classname="com.ta.sample.A2.ACTest" time="0.001"/>
+    <testcase name="testACCreateIDIncrement" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testAC_isNoisy" classname="com.ta.sample.A2.ACTest" time="0.0"/>
+    <testcase name="testTurnOn" classname="com.ta.sample.A2.ACTest" time="0.001"/>
+  </testsuite>
+</testrun>

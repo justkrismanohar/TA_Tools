@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CoolingSimulationTest" project="COMP2603-A2-Test-Student" tests="16" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="CoolingSimulationTest" incomplete="true">
+    <testcase name="testSwapPortableDevices" classname="CoolingSimulationTest" time="7.893"/>
+    <testcase name="testRoom4ConditionsIsNull" classname="CoolingSimulationTest" time="0.004"/>
+    <testcase name="testRoom1ConditionsIsNull" classname="CoolingSimulationTest" time="0.001"/>
+    <testcase name="testRoom4ConditionsValues" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testDevicesCreatedRoom1" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testDevicesCreatedRoom2" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testDevicesCreatedRoom3" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testDevicesCreatedRoom4" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoom1ConditionsValues" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoom2ConditionsIsNull" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoom2ConditionsValues" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoomsCreatedLength" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoomsCreatedIsNotNull" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoom3ConditionsIsNull" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testSwapPortableDevicesRoom4Length" classname="CoolingSimulationTest" incomplete="true"/>
+    <testcase name="testRoom3ConditionsValues" classname="CoolingSimulationTest" incomplete="true"/>
+  </testsuite>
+</testrun>

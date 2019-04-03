@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestCaseMaker extends ManualMarker {
+
+	
+	private List<RowData> testCases;
+	
+	private void loadRowData(){
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("TestCases.txt"));
+			testCases = new ArrayList<RowData>();
+			
+			for(String line = br.readLine(); line!=null; line = br.readLine()){
+				RowData row = new RowData();
+				row.addDesc("Test Case");
+				row.addDesc(line);
+				row.setMark("0.5");
+				row.addComment("OK");
+				row.addComment("Missing");
+				row.addComment("Incorrect");
+				row.addComment("Incomplete");
+	
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@Override
+	protected String[] getHeader() {
+		String[] header = {"Working Program and Documentation","CRITERIA","Marks","Out of","Areas/Comments"};
+		return header;
+	}
+
+	@Override
+	protected List<RowData> getRowData() {
+		List<RowData> l = new ArrayList<RowData>();
+		
+		RowData rd = new RowData();
+		rd.addDesc("Test case");
+		rd.addDesc("Display list of existing rooms (no rooms)");
+		rd.setMark("0.5");
+		rd.addComment("OK");
+		rd.addComment("Missing");
+		rd.addComment("Incorrect");
+		rd.addComment("Incomplete");
+		
+		l.add(rd);
+		return l;
+	}
+
+	@Override
+	public void mark() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			String path = this.getMarksheet().getDirPath(); 
+			rt.exec("cmd.exe /c start test.bat \""+path+"\" RentalConsole.java RentalConsole", null, dir);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		super.mark();
+	}
+	
+	private void executeCommand(String command) {
+		
+	}
+
+
+}

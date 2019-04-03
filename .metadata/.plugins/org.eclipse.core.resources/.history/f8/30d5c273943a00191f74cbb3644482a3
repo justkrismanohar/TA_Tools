@@ -1,0 +1,41 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Marksheet {
+
+	
+	public static void main(String[] args){
+		Workbook workbook = new XSSFWorkbook();
+		
+		Sheet sheet = workbook.createSheet("A1");
+		createIthRow(sheet, 10);
+
+		try {
+			FileOutputStream fileOut;
+			fileOut = new FileOutputStream("Assignment 1 Makring Slip.xlsx");
+			workbook.write(fileOut);
+			fileOut.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void createIthRow(Sheet sheet,int i, String... values){
+		Row row = sheet.createRow(i);
+	    for (int k = 0; k < 10; k++) {
+	        Cell cell = row.createCell(k);
+	        //cell.setCellValue(columns[i]);
+	        cell.setCellValue("Column "+k);
+	        //cell.setCellStyle(headerCellStyle);
+	      }
+	}
+}

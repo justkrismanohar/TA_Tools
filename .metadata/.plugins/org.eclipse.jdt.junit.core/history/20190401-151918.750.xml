@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="RoomTest (1)" project="COMP2603-A2-Test-Student" tests="19" started="19" failures="0" errors="0" ignored="0">
+  <testsuite name="RoomTest" time="0.027">
+    <testcase name="testTemperatureDropSFOn" classname="RoomTest" time="0.016"/>
+    <testcase name="testTemperatureDropNothingOn" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomBreezinessSFandCFandACOn" classname="RoomTest" time="0.0"/>
+    <testcase name="testRemoveCeilingFan" classname="RoomTest" time="0.001"/>
+    <testcase name="testAddDevices" classname="RoomTest" time="0.0"/>
+    <testcase name="testRemoveStandingFan" classname="RoomTest" time="0.0"/>
+    <testcase name="testTemperatureDropAllOn" classname="RoomTest" time="0.001"/>
+    <testcase name="testRemoveLength" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomBreezinessAllOff" classname="RoomTest" time="0.0"/>
+    <testcase name="testRemoveAC" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomBreezinessSFAndCFOn" classname="RoomTest" time="0.001"/>
+    <testcase name="testRoomBreezinessSFOnly" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomNoisinessSFandCFOn" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomNoisinessSFOn" classname="RoomTest" time="0.0"/>
+    <testcase name="testTemperatureDropSFAndCFOn" classname="RoomTest" time="0.002"/>
+    <testcase name="testDeviceArrayList" classname="RoomTest" time="0.003"/>
+    <testcase name="testGetDevices" classname="RoomTest" time="0.001"/>
+    <testcase name="testRoomNoisinessAllOff" classname="RoomTest" time="0.0"/>
+    <testcase name="testRoomNoisinessSFandCFandACOn" classname="RoomTest" time="0.002"/>
+  </testsuite>
+</testrun>

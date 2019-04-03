@@ -1,0 +1,29 @@
+import java.util.List;
+
+public abstract class ManualMarker extends Marker{
+
+	protected abstract String[] getHeader();
+	protected abstract List<RowData> getRowData();
+
+	@Override
+	public void mark() {
+	//Handle marking in your own way...
+		Marksheet markingSlip = getMarksheet();
+		markingSlip.writeHeaderln(getHeader());
+		
+		List<RowData> rowData = getRowData();
+		
+		float mark, outOf,totalOutOf = 0;
+		
+		for(RowData row : rowData){
+			outOf = Float.parseFloat(row.getMark());
+			totalOutOf+= outOf;
+			markingSlip.displayAndWriteDescription(row.getDesc());	
+			mark = markingSlip.getMarkAndPromptForComment(outOf,"/"+outOf,row.getComments());
+			addToTotal(mark);
+		}
+		
+		markingSlip.writeRowln("TOTAL","",Float.toString(getTotal()),"/"+totalOutOf);
+	}
+
+}
