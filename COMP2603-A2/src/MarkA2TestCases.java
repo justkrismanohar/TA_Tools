@@ -1,5 +1,6 @@
 
 import com.ta.core.MarkingProcess;
+import com.ta.core.Marksheet;
 import com.ta.core.ManualMarker;
 import com.ta.core.TestCaseMarker;
 import com.ta.core.BatchProcess.ItemAction;
@@ -58,23 +59,19 @@ public class MarkA2TestCases extends TestCaseMarker
 	
 	@Override
 	protected void markStudentCompilation(CompilationResults cr){
+		Marksheet m = getMarksheet();
+		m.writeRowBoldln("Compilation");
 		
 		for(String className : cr.getFailureCompilationArray()){
 			System.out.println(className + " does not complie");
+			m.writeRowln(className+".java"," Does not compile");
 		}
 
 		for(String className : cr.getSuccessCompilationArray()){
 			System.out.println(className + " complies");
+			m.writeRowln(className+".java"," Complies");
 		}
 
-//		for(String className : studentClassNames){
-//			if(isClassLoaded(className)){
-//				System.out.println(className + " compiles");
-//			}
-//			else{
-//				System.out.println(className +" does not compile");
-//			}
-//		}
 	}
 
 }

@@ -64,7 +64,7 @@ public abstract class TestCaseMarker extends Marker{
 	
 	@Override
 	public void mark() {
-    	JUnitCore junit = new JUnitCore();
+		JUnitCore junit = new JUnitCore();
     	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
     	
     	CompilationResults studentClassesCR = complieAndLoadStudentClasses();
@@ -72,6 +72,8 @@ public abstract class TestCaseMarker extends Marker{
     	
 		CompilationResults testCasesCR = copyAndComplieTestClasses();
 		printTestCasesCompilation(testCasesCR);
+		
+		printHeader();
 		Result result = junit.run(getSuccessfullyCompliedClasses(testCasesCR));
 	    
         resultReport(result);    		

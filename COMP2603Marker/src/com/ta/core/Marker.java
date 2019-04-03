@@ -8,7 +8,6 @@ public abstract class Marker {
 	protected float total;
 	protected float totalOutOf;
 	
-		
 	public Marker(){
 		total = 0;
 	}
@@ -40,4 +39,7 @@ public abstract class Marker {
 
 	public abstract void mark();
 	
+	protected void printHeader(){
+		getMarksheet().writeRowBoldln("Test Class","Test Method","Comment");
+	}
 }
