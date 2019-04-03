@@ -8,9 +8,7 @@ public abstract class Marker {
 	private Marksheet markingSlip;
 	protected float total;
 	protected float totalOutOf;
-	protected String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst ";
-	protected String srcFilesToOpen = " *.java";
-		
+	
 	public Marker(){
 		total = 0;
 	}
@@ -49,7 +47,7 @@ public abstract class Marker {
 	protected void openJavaFilesInNotepad() {
 		try {
 			Runtime rt = Runtime.getRuntime();
-			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(getMarksheet().getDirPath()));
+			rt.exec("cmd.exe /c "+openFilesCmd, null, new File(item.getAbsolutePath()));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

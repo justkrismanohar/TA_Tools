@@ -62,11 +62,17 @@ public abstract class TestCaseMarker extends Marker{
 		return AutoMarker.getExternallyLoadedClasses(testClasses);
 	}
 	
+	private void openStudentFilesInNotepad(){
+		srcFilesToOpen = "";
+		for(String fileName : getStudentClassNames()){
+			
+		}
+		
+	}
+	
 	@Override
 	public void mark() {
-		
 		openJavaFilesInNotepad();
-		
 		JUnitCore junit = new JUnitCore();
     	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
     	

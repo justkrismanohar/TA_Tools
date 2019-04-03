@@ -13,6 +13,7 @@ public class MarkingProcess {
 	private File item;
 	
 	//TO DO: PULL FROM CONFIG FILE
+	private static String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst *.java ";
 	private static String finalTotalPrefix = "Final Total";
 	private static String sheetWithMarksName = "A1";
 	private static String sheetWithMasterMarksName = "Final Marks";
@@ -68,7 +69,7 @@ public class MarkingProcess {
 			//System call to close all tabs in notepad++ and all .java files
 			//https://notepad-plus-plus.org/community/topic/13482/closing-all-tabs-prior-to-starting-editor/2
 			
-			//openJavaFilesInNotepad();
+			openJavaFilesInNotepad();
 			
 			float totalMark = 0, totalOutOf = 0;
 			for(Marker m : markers){

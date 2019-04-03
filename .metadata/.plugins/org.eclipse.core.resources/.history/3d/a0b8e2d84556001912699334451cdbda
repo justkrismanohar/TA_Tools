@@ -49,7 +49,7 @@ public abstract class Marker {
 	protected void openJavaFilesInNotepad() {
 		try {
 			Runtime rt = Runtime.getRuntime();
-			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(getMarksheet().getDirPath()));
+			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(item.getAbsolutePath()));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

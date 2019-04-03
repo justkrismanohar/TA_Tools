@@ -27,7 +27,6 @@ public class MarkA2TestCases extends TestCaseMarker
 	
 	public MarkA2TestCases(String sourceDir) {
 		super(sourceDir);
-		
 		studentClassNames = new String[] {
 				"Device"
 				,"PortableDevice"
@@ -48,8 +47,8 @@ public class MarkA2TestCases extends TestCaseMarker
 		};
 		
 		srcFilesToOpen = "";
-		for(String fileName : studentClassNames){
-			srcFilesToOpen +=  fileName +".java ";
+		for(String fileName : testClassNames){
+			srcFilesToOpen+ =  fileName +".java ";
 		}
 	
 	}

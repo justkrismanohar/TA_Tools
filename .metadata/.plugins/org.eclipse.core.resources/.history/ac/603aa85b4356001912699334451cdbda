@@ -31,6 +31,14 @@ public class MarkA2 extends BatchProcess {
 					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A2");
 					pm.addMarker(new InsertHeader(fileItem.getName(),"COMP 2603","Assignment #2"));
 					
+//					pm.addMarker(new Marker(){
+//						@Override
+//						public void mark() {
+//							getMarksheet().writeRowBoldln("Test Class","Test Method","Comment");
+//							
+//						}
+//					});
+					
 					//reflective checks for methods
 					pm.addMarker(new MarkA2TestCases(testCasesDir));
 					pm.markAll();
