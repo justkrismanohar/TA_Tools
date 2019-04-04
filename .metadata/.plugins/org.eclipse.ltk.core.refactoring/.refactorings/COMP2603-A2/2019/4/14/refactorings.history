@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;COMP2603-A2/src/AdditionalComments.txt&apos; to &apos;ac.txt&apos;" description="Rename resource &apos;AdditionalComments.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/AdditionalComments.txt" name="ac.txt" stamp="1554383185307" updateReferences="true"/>
+</session>

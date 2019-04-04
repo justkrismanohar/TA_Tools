@@ -1,0 +1,6 @@
+package com.ta.core;
+
+public class CompilationMarker extends Marker {
+	
+
+}

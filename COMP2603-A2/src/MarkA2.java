@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.ta.core.MarkingProcess;
 import com.ta.core.BatchProcess;
+import com.ta.core.ManualMarker;
 import com.ta.core.BatchProcess.ItemAction;
 import com.ta.core.Marker;
 import com.ta.sample.InsertHeader;
@@ -33,6 +34,7 @@ public class MarkA2 extends BatchProcess {
 					
 					//reflective checks for methods
 					pm.addMarker(new MarkA2TestCases(testCasesDir));
+					pm.addMarker(new ManualMarker("Additional Comments", "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2\\src\\"+"ac.txt"));
 					pm.markAll();
 					pm.saveMarkingSlip();
 					//should move files to a marked folder so don't accidentally overwrite them

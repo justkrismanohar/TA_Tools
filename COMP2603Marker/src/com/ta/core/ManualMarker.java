@@ -23,7 +23,7 @@ public class ManualMarker extends Marker{
 	}
 	
 	protected String[] getHeader() {
-		String[] header = {className,"CRITERIA","Marks","Out of","Areas/Comments"};
+		String[] header = {className,"Criteria","Marks","Out of","Areas/Comments"};
 		return header;
 	}
 	
@@ -54,11 +54,13 @@ public class ManualMarker extends Marker{
 		}
 	}
 	
+	
 	@Override
 	public void mark() {
 	//Handle marking in your own way...
 		Marksheet markingSlip = getMarksheet();
-		markingSlip.writeHeaderln(getHeader());
+		//markingSlip.writeHeaderln(getHeader());
+		markingSlip.writeRowBoldln(getHeader());
 		
 		List<RowData> rowData = getRowData();
 		
@@ -73,7 +75,7 @@ public class ManualMarker extends Marker{
 			addToTotal(mark);
 		}
 		
-		markingSlip.writeRowln("TOTAL","",Float.toString(getTotal()),"/"+totalOutOf);
+		markingSlip.writeRowln("","TOTAL",Float.toString(getTotal()),"/"+totalOutOf);
 	}
 
 }

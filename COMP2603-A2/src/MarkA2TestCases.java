@@ -53,6 +53,15 @@ public class MarkA2TestCases extends TestCaseMarker
 		}
 		
 		this.totalOutOf = 74;
+		
+		this.compilationMarker.setTotalOutOf(5);
+		this.compilationMarker.setScheme(
+				new float[][]{
+					{0,0},
+					{1, 1},
+					{3, 3},
+					{5, 5}
+		});
 	}
 	
 	@Override
@@ -65,22 +74,21 @@ public class MarkA2TestCases extends TestCaseMarker
 		return testClassNames;
 	}
 	
-	@Override
-	protected void markStudentCompilation(CompilationResults cr){
-		Marksheet m = getMarksheet();
-		m.writeRowBoldln("Compilation");
-		
-		for(String className : cr.getFailureCompilationArray()){
-			System.out.println(className + " does not complie");
-			m.writeRowln(className+".java"," Does not compile");
-		}
-
-		for(String className : cr.getSuccessCompilationArray()){
-			System.out.println(className + " complies");
-			m.writeRowln(className+".java"," Complies");
-		}
-		
-		
-	}
+//	@Override
+//	protected void markStudentCompilation(CompilationResults cr){
+//		Marksheet m = getMarksheet();
+//		m.writeRowBoldln("Compilation");
+//		
+//		for(String className : cr.getFailureCompilationArray()){
+//			System.out.println(className + " does not complie");
+//			m.writeRowln(className+".java"," Does not compile");
+//		}
+//
+//		for(String className : cr.getSuccessCompilationArray()){
+//			System.out.println(className + " complies");
+//			m.writeRowln(className+".java"," Complies");
+//		}
+//		
+//	}
 
 }

@@ -14,14 +14,22 @@ public abstract class TestCaseMarker extends Marker{
 	private static Marksheet workingMarksheet;
 	protected String sourceDir; 
 	
+	protected CompilationMarker compilationMarker;
+	
 	protected TestCaseMarker(String sourceDir){
 		this.sourceDir = sourceDir;
+		this.compilationMarker = new CompilationMarker();
 	}
 	
 	public static Marksheet getWorkingMarksheet(){
 		return workingMarksheet;
 	}
 	
+	@Override
+	public void setMarksheet(Marksheet m){
+		super.setMarksheet(m);
+		this.compilationMarker.setMarksheet(m);
+	}
 	
 	public static void resultReport(Result result) {
 	    System.out.println("Finished. Result: Failures: " +
@@ -65,23 +73,27 @@ public abstract class TestCaseMarker extends Marker{
 	@Override
 	public void mark() {
 		
-		openJavaFilesInNotepad();
+		Marksheet markingSlip = getMarksheet();
 		
-		JUnitCore junit = new JUnitCore();
-    	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
-    	
+		
+		openJavaFilesInNotepad();
+		runCommand("start", markingSlip.getDirPath());
+		//Compile student classes
     	CompilationResults studentClassesCR = complieAndLoadStudentClasses();
     	markStudentCompilation(studentClassesCR);
-    	
-		CompilationResults testCasesCR = copyAndComplieTestClasses();
-		printTestCasesCompilation(testCasesCR);
 		
-		printHeader();
+    	//Compile and run Test cases
+    	CompilationResults testCasesCR = copyAndComplieTestClasses();
+		printTestCasesCompilation(testCasesCR);
+
+		JUnitCore junit = new JUnitCore();
+    	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
+		markingSlip.writeRowBoldln("Test Cases");
+    	markingSlip.writeRowBoldln("Test Class","Test Method","Comment");
 		Result result = junit.run(getSuccessfullyCompliedClasses(testCasesCR));
 	    
         resultReport(result);    		
 	
-        
         int actualTestsExecuted = result.getRunCount();
         int testsNotExecuted = (int)(totalOutOf - actualTestsExecuted);
         
@@ -91,11 +103,17 @@ public abstract class TestCaseMarker extends Marker{
         this.total -= testsNotExecuted;
         
         if(testsNotExecuted > 0){
-        	getMarksheet().writeRowBoldln("",testsNotExecuted+" tests did not complie", " Compliation errors");
+        	markingSlip.writeRowBoldln("",testsNotExecuted+" tests did not compile", " Compilation errors");
         }
+        
+        markingSlip.writeRowln("","TOTAL",Float.toString(total),"/"+Float.toString(totalOutOf));
 	}
 	
-	protected void markStudentCompilation(CompilationResults cr){}
+	
+	protected void markStudentCompilation(CompilationResults cr){
+		compilationMarker.setCompilationResults(cr);
+		compilationMarker.mark();
+	}
 	
 	protected void printTestCasesCompilation(CompilationResults cr){
 		System.out.println("Test Cases Compilation");
@@ -104,12 +122,23 @@ public abstract class TestCaseMarker extends Marker{
 		}
 
 		for(String className : cr.getSuccessCompilationArray()){
-			System.out.println(className + " complies");
+			System.out.println(className + " compiles");
 		}
 	}
 	
 	protected boolean isClassLoaded(String name){
  		return AutoMarker.getExternallyLoadedClass(name) != null;
+	}
+	
+	@Override
+	public float getTotal(){
+		return total + compilationMarker.getTotal();
+	}
+	
+	
+	@Override
+	public float getTotalOutOf(){
+		return totalOutOf + compilationMarker.getTotal();
 	}
 	
 }

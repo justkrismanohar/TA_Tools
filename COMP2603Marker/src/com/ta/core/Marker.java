@@ -21,6 +21,7 @@ public abstract class Marker {
 		markingSlip = m;
 		total = 0;
 	}
+	
 	public Marksheet getMarksheet(){
 	
 		return markingSlip;
@@ -44,14 +45,22 @@ public abstract class Marker {
 
 	public abstract void mark();
 	
-	protected void printHeader(){
-		getMarksheet().writeRowBoldln("Test Class","Test Method","Comment");
+	protected void openJavaFilesInNotepad() {
+		runCommand(openFilesCmd  +srcFilesToOpen, getMarksheet().getDirPath());
+//		try {
+//			Runtime rt = Runtime.getRuntime();
+//			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(getMarksheet().getDirPath()));
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
-	protected void openJavaFilesInNotepad() {
+	protected void runCommand(String command,String path){
 		try {
 			Runtime rt = Runtime.getRuntime();
-			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(getMarksheet().getDirPath()));
+			File dir = new File(path);			
+			rt.exec("cmd.exe /c " +command, null, dir);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

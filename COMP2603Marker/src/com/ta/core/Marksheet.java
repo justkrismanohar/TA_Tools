@@ -154,7 +154,7 @@ public class Marksheet {
 		writeColumn(rowStyle, row, ""+mark);
 		writeColumn(rowStyle, row, outOfStr);
 		//prompt  for comment from list for comments
-		writeColumns(rowStyle, row, promptForComments(comments));
+		if(comments.length > 0 ) writeColumns(rowStyle, row, promptForComments(comments));
 		//writeColumn(rowStyle, row,);
 		return mark;
 	}

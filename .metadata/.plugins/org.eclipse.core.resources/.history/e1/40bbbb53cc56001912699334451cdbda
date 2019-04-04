@@ -1,0 +1,19 @@
+package com.ta.core;
+
+public class CompilationMarker extends Marker {
+
+	private CompilationResults cr;
+	public CompilationMarker(Marksheet m){
+		super(m);
+	}
+	
+	@Override
+	public void mark() {
+	
+		
+	}
+	
+	
+	
+
+}
