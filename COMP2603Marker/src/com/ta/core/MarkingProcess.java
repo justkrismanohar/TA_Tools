@@ -3,7 +3,9 @@ package com.ta.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MarkingProcess {
 	
@@ -57,6 +59,37 @@ public class MarkingProcess {
 		return finalTotalPrefix;
 	}
 	
+	
+	private String getAllFilesWithExtensionButNotIn(String extension, Set<String> haveFilenames) {
+		ArrayList<String> out = new ArrayList<String>();
+		
+		File[] contents = item.listFiles();
+		
+		int endIndex = contents.length-1;
+		
+		File item;
+		
+		for(int k = 0; k < contents.length && k <= endIndex; k++){
+			item = contents[k];
+			if(!item.isDirectory()) {
+				String itemName = item.getName();
+				String[] parts = itemName.split("\\.");
+				if(parts[parts.length-1].equals(extension) && !haveFilenames.contains(parts[0]))
+					out.add(item.getName());
+			}
+		}
+		
+		String names = "";
+		for(String n : out) {
+			names += n+" ";
+		}
+		return names;
+	}
+	
+	private String getAllFilesWithExtension(String extension) {
+		return getAllFilesWithExtensionButNotIn(extension, new HashSet<String>());
+	}
+	
 	public void markAll(){
 		
 		
@@ -69,7 +102,14 @@ public class MarkingProcess {
 			//https://notepad-plus-plus.org/community/topic/13482/closing-all-tabs-prior-to-starting-editor/2
 			
 			//openJavaFilesInNotepad();
+			HashSet<String> haveFiles = new HashSet<String>();
+			haveFiles.add(markingSlip.getFilename().split("\\.")[0]);
 			
+			String xlsxFiles = getAllFilesWithExtensionButNotIn("xlsx", haveFiles);
+			String docxFiles = getAllFilesWithExtension("docx");
+			
+			runCommand("start winword "+docxFiles);
+			runCommand("start excel "+ xlsxFiles);
 			float totalMark = 0, totalOutOf = 0;
 			for(Marker m : markers){
 				m.setMarksheet(markingSlip);
@@ -83,6 +123,15 @@ public class MarkingProcess {
 		}
 	}
 	
+	private void runCommand(String cmdToExecute) {
+	try {
+		Runtime rt = Runtime.getRuntime();
+		rt.exec("cmd.exe /c "+cmdToExecute, null, new File(item.getAbsolutePath()));
+		
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
 	
 
 //	private void openJavaFilesInNotepad() {

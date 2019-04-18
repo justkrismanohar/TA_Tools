@@ -1,4 +1,0 @@
- ; 6 Menu options presented in a working loop; 6; OK; 6 Corret; 3-5 Correct; 1-2 Correct
- ; Correct capture of input data from user; 4; OK; Missing; Incorrect; Incomplete
- ; RentalSystem instance; 1; OK; Missing; Incorrect; Incomplete
- ; Appropriate output messages based on options selected; 6; OK; Missing; Incorrect; Incomplete

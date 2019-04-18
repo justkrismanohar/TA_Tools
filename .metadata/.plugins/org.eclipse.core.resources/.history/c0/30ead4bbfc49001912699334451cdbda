@@ -1,5 +1,0 @@
-import com.ta.core.BatchProcess;
-
-public class A2Marker extends BatchProcess {
-
-}

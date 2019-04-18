@@ -6,9 +6,10 @@ public class CeilingFan extends Fan{
         super(0);
     }
     
-     public String getID(){
+    public String getID(){
         return "CFAN"+id;
     }
+    
     public boolean isNoisy(){
         return false;
     }
