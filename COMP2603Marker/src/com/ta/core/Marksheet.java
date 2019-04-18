@@ -82,6 +82,10 @@ public class Marksheet {
 		initMarksheet(dir_path, filename);
 	}
 	
+	public String getFilename(){
+		return filename;
+	}
+	
 	public boolean hasText(String finalMarkPrefix, int col){
 		//checks to see if last row, has final mark in it
 		int lastRow = sheet.getLastRowNum();

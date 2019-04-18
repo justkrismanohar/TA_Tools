@@ -140,8 +140,8 @@ public class AutoMarker {
 		    // the directory file:/c:/myclasses/com/mycompany
 		    Class cls = cl.loadClass(className);
 		    return cls;
-		} catch (MalformedURLException e) {
-		} catch (ClassNotFoundException e) {
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 		return null;
 		

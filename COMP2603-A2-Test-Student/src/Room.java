@@ -11,7 +11,7 @@ public class Room{
     private int actualNoisiness;
 
     public Room(int startingTemperature){
-        devices = new ArrayList<>();
+        devices = new ArrayList<Device>();
         this.actualTemperature = startingTemperature;
     }
 
@@ -27,6 +27,7 @@ public class Room{
         }
         return tempDrop;
     }
+    
     public int getTemperature(){
         int tempDrop = getTemperatureDrop();
         

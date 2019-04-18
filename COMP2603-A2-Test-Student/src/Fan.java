@@ -20,6 +20,7 @@ public abstract class Fan implements Device{
     public int getBreeziness(){
         return breeziness;
     }
+    
     public int getNoisiness(){
         return noisiness;
     }
@@ -27,14 +28,14 @@ public abstract class Fan implements Device{
     public boolean isBreezy(){
         return true;
     }
-    
-    
+      
     public void turnOn(){ isOn= true;}
     public void turnOff(){ isOn = false;}
  
     public boolean equals(Device d){
         return d.getID().equals(this.id);
     }
+    
     public String toString(){
         return "" + id;
     }

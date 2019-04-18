@@ -1,7 +1,6 @@
 
 
 public interface Device{
-    
     String getID();
     boolean isBreezy();
     boolean isNoisy();
@@ -12,5 +11,4 @@ public interface Device{
     boolean isOn();
     int getBreeziness();
     int getNoisiness();
-    
 }

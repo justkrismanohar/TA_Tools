@@ -154,16 +154,18 @@ public class CoolingSimulationTest
     public void testRoom1ConditionsValues(){
         sim.coolRoom1();
         Room r = sim.getRoom(1);
+        int temperature =-1, breeziness=-1, noisiness=-1; 
         try {
-	        int temperature = r.getTemperature();
-	        int breeziness = r.getBreeziness();
-	        int noisiness = r.getNoisiness();
-	        assertThat("After calling coolRom1() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 24, 8, and 6 respectively",
-	        		temperature == 24 && breeziness == 8 && noisiness == 6, is(true));
+	        temperature = r.getTemperature();
+	        breeziness = r.getBreeziness();
+	        noisiness = r.getNoisiness();
         }
         catch(Throwable t){
         	assertThat("getRoom(1) returned null after calling coolRoom1()",true,is(false));
         }
+        
+        assertThat("After calling coolRom1() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 24, 8, and 6 respectively",
+        		temperature == 24 && breeziness == 8 && noisiness == 6, is(true));
     }
 
     @Test
@@ -178,16 +180,18 @@ public class CoolingSimulationTest
     public void testRoom2ConditionsValues(){
         sim.coolRoom2();
         Room r = sim.getRoom(2);
+        int temperature =-1, breeziness=-1, noisiness=-1; 
         try {
-	        int temperature = r.getTemperature();
-	        int breeziness = r.getBreeziness();
-	        int noisiness = r.getNoisiness();
-	        assertThat("After calling coolRom2() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 25, 0, and 0 respectively",
-	        		temperature == 25 && breeziness == 0 && noisiness == 0, is(true));
+	        temperature = r.getTemperature();
+	        breeziness = r.getBreeziness();
+	        noisiness = r.getNoisiness();
         }
         catch(Throwable t){
         	assertThat("getRoom(2) returned null after calling coolRoom2()",true,is(false));
         }
+        
+        assertThat("After calling coolRom2() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 25, 0, and 0 respectively",
+        		temperature == 25 && breeziness == 0 && noisiness == 0, is(true));
     }
 
     @Test
@@ -202,16 +206,19 @@ public class CoolingSimulationTest
     public void testRoom3ConditionsValues(){
         sim.coolRoom3();
         Room r = sim.getRoom(3);
+        int temperature =-1, breeziness=-1, noisiness=-1; 
         try {
-	        int temperature = r.getTemperature();
-	        int breeziness = r.getBreeziness();
-	        int noisiness = r.getNoisiness();
-	        assertThat("After calling coolRom3() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 26, 4, and 0 respectively",
-	        		temperature == 26 && breeziness == 4 && noisiness == 0, is(true));
-        }
+	        temperature = r.getTemperature();
+	        breeziness = r.getBreeziness();
+	        noisiness = r.getNoisiness();
+	    }
         catch(Throwable t){
         	assertThat("getRoom(3) returned null after calling coolRoom3()",true,is(false));
         }
+    
+        assertThat("After calling coolRom3() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 26, 4, and 0 respectively",
+        		temperature == 26 && breeziness == 4 && noisiness == 0, is(true));
+            
     }
     
     @Test
@@ -226,16 +233,22 @@ public class CoolingSimulationTest
     public void testRoom4ConditionsValues(){
         sim.coolRoom4();
         Room r = sim.getRoom(4);
+        int temperature = -1,breeziness = -1, noisiness =-1;
+    
         try {
-	        int temperature = r.getTemperature();
-	        int breeziness = r.getBreeziness();
-	        int noisiness = r.getNoisiness();
-	        assertThat("After calling coolRom4() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness" + noisiness +" expcted 7, 22, and 20 respectively",
-	        		temperature == 7 && breeziness == 22 && noisiness == 20, is(true));
-        }
+	        temperature = r.getTemperature();
+	        breeziness = r.getBreeziness();
+	        noisiness = r.getNoisiness();
+	    }
         catch(Throwable t){
+        	t.printStackTrace(System.out);
         	assertThat("getRoom(4) returned null after calling coolRoom4()",true,is(false));
         }
+        
+        boolean test = temperature == 7 && breeziness == 22 && noisiness == 20;
+        assertThat("After calling coolRom4() should have temperature : "+temperature+" breeziness : "+ breeziness +" noisiness " + noisiness +" expcted 7, 22, and 20 respectively",
+        		test, is(true));
+          
     }
     
      @Test

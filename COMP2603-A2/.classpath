@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="C:/Users/krism/Projects/Java/COMP2603Marker/lib/hamcrest-all-1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/krism/Projects/Java/COMP2603Marker/lib/junit-4.12.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/COMP2603Marker"/>
+	<classpathentry kind="lib" path="C:/Users/krism/Projects/Java/COMP2603Marker/lib/sevenzipjbinding-9.20-2.00beta-AllWindows/lib/sevenzipjbinding.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krism/Projects/Java/COMP2603Marker/lib/sevenzipjbinding-9.20-2.00beta-AllWindows/lib/sevenzipjbinding-AllWindows.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
