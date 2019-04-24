@@ -1,3 +1,0 @@
-private interface MakeDir{
-	public File createDirAndFile(ISimpleInArchiveItem item) throws SevenZipException;
-}

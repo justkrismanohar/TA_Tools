@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;MarkA2&apos; to &apos;MarkA3&apos;&#x0D;&#x0A;- Original project: &apos;COMP2603-A3&apos;&#x0D;&#x0A;- Original element: &apos;MarkA2&apos;&#x0D;&#x0A;- Renamed element: &apos;MarkA3&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;MarkA2&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{MarkA2.java[MarkA2" matchStrategy="1" name="MarkA3" qualified="false" references="true" similarDeclarations="false" stamp="1556149730860" textual="false" version="1.0"/>
+</session>

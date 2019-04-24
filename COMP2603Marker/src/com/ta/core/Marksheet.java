@@ -159,6 +159,20 @@ public class Marksheet {
 		return mark;
 	}
 	
+	private float promptForMark(float outOf, String outOfStr) {
+		
+		float mark = 0;
+		do {
+			System.out.print("Please enter Mark "+outOfStr+ ": ");
+			mark = readMark();
+		}
+		while(!(0<= mark && mark <= outOf));
+		
+		System.out.println();
+		
+		return mark;
+	}
+	
 	private float readMark(){
 		float mark;
 		try {
@@ -174,19 +188,6 @@ public class Marksheet {
 		return mark;
 	}
 	
-	private float promptForMark(float outOf, String outOfStr) {
-		
-		float mark = 0;
-		do {
-			System.out.print("Please enter Mark "+outOfStr+ ": ");
-			mark = readMark();
-		}
-		while(!(0<= mark && mark <= outOf));
-		
-		System.out.println();
-		
-		return mark;
-	}
 	
 	private int[] extractSelectionIds(String s) throws Exception{
 		String[] parts = s.split(" ");

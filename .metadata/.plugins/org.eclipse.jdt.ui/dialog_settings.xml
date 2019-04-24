@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="C:\Users\krism\Projects\Java\COMP2603Marker\lib\poi-4.0.1\lib" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="C:\Users\krism\Projects\Java\COMP2603Marker\lib\sevenzipjbinding-9.20-2.00beta-AllWindows\lib" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
 		<item value="false" key="updateSimilarElements"/>
 		<item value="1" key="updateSimilarElementsMatchStrategy"/>
