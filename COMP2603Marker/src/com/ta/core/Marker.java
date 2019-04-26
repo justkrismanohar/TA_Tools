@@ -6,29 +6,27 @@ import java.io.IOException;
 public abstract class Marker {
 	
 	protected final float defaultTotalOutOf = Float.MIN_VALUE;
-	private Marksheet markingSlip;
+	protected MarkingProcess markingProcess;
 	protected float total;
 	protected float totalOutOf;
-	protected String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst ";
-	protected String srcFilesToOpen = " *.java";
+
 		
 	public Marker(){
 		total = 0;
 		totalOutOf = defaultTotalOutOf;
 	}
 	
-	public Marker(Marksheet m){
-		markingSlip = m;
+	public Marker(MarkingProcess mp){
+		setMarkingProcess(mp);
 		total = 0;
 	}
 	
 	public Marksheet getMarksheet(){
-	
-		return markingSlip;
+		return markingProcess.getMarkingSlip();
 	}
 	
-	public void setMarksheet(Marksheet m){
-		markingSlip = m;
+	public void setMarkingProcess(MarkingProcess mp){
+		this.markingProcess = mp;
 	}
 	
 	public float getTotal(){
@@ -45,25 +43,5 @@ public abstract class Marker {
 
 	public abstract void mark();
 	
-	protected void openJavaFilesInNotepad() {
-		runCommand(openFilesCmd  +srcFilesToOpen, getMarksheet().getDirPath());
-//		try {
-//			Runtime rt = Runtime.getRuntime();
-//			rt.exec("cmd.exe /c "+openFilesCmd  +srcFilesToOpen, null, new File(getMarksheet().getDirPath()));
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-	}
-	
-	protected void runCommand(String command,String path){
-		try {
-			Runtime rt = Runtime.getRuntime();
-			File dir = new File(path);			
-			rt.exec("cmd.exe /c " +command, null, dir);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 }

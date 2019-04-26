@@ -85,23 +85,23 @@ public class Extract {
                    // String filename = item.getPath();
                     
                 	ExtractOperationResult result;
-
+                	//Create the output file
+                    
+                    FileOutputStream fos;
+                	File file = outputDir.createDirAndFile(item);
+                	fos = new FileOutputStream(file);
+                  
                     final long[] sizeArray = new long[1];
                     result = item.extractSlow(new ISequentialOutStream() {
                         public int write(byte[] data) throws SevenZipException {
-                            //Write to file
-                            FileOutputStream fos;
                             //#Blog
                             //https://stackoverflow.com/questions/19403829/decompress-files-with-7z-extension-in-java/19403933#19403933
                             //https://www.javaworld.com/article/2074973/uncompressing-7-zip-files-with-groovy-and-7-zip-jbinding.html
                             
                             try {
-                            	//Create the output file
-                            	File file = outputDir.createDirAndFile(item);
-                            	fos = new FileOutputStream(file);
-                                fos.write(data);
-                                fos.close();
-
+                            	//Write to file
+                            	fos.write(data);
+                              
                             } catch (Throwable e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
@@ -115,6 +115,12 @@ public class Extract {
                             return data.length; // Return amount of consumed                                                // data
                         }
                     });
+                    
+                    try {
+						fos.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 
                     if (result == ExtractOperationResult.OK) {
                         System.out.println(String.format("%9X | %10s | %s", hash[0], sizeArray[0], item.getPath()));

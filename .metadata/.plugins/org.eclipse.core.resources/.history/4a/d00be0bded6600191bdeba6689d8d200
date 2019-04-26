@@ -1,0 +1,5 @@
+package com.ta.core;
+
+public class ValidateZip implements ActionItem {
+
+}

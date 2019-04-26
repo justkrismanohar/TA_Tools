@@ -2,6 +2,9 @@ package com.ta.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +13,15 @@ public class MarkingProcess {
 	private String dirPath;
 	private Marksheet markingSlip;
 	private List<Marker> markers;
-	private File item;
+	private File directory;
 	
 	//TO DO: PULL FROM CONFIG FILE
 	private static String finalTotalPrefix = "Final Total";
 	private static String sheetWithMarksName = "A1";
 	private static String sheetWithMasterMarksName = "Final Marks";
+	
+	protected String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst ";
+	protected String srcFilesToOpen = "*.java";
 	
 	private static Marksheet masterSheet = null;
 	public static Marksheet getMasterSheet(String dirPath,String filename){
@@ -39,7 +45,7 @@ public class MarkingProcess {
 	}
 	
 	private void initializeAttributes(File item, String filename) {
-		this.item = item;
+		this.directory = item;
 		this.dirPath = item.getAbsolutePath();
 		markers = new ArrayList<Marker>();
 		markingSlip = new Marksheet(dirPath,filename);
@@ -72,7 +78,8 @@ public class MarkingProcess {
 			
 			float totalMark = 0, totalOutOf = 0;
 			for(Marker m : markers){
-				m.setMarksheet(markingSlip);
+				//m.setMarksheet(markingSlip);
+				m.setMarkingProcess(this);
 				m.mark();
 				totalMark += m.getTotal();
 				totalOutOf += m.getTotalOutOf();
@@ -99,6 +106,58 @@ public class MarkingProcess {
 		if(markingSlip!=null){
 			markingSlip.writeExcelFile();
 		}
+	}
+	
+	public Marksheet getMarkingSlip(){
+		return markingSlip;
+	}
+	
+	public void openJavaFilesInNotepad() {
+		runCommand(openFilesCmd  +srcFilesToOpen, directory.getAbsolutePath());
+	}
+	
+	public void openJavaFilesInNotepad(String srcFilesToOpen) {
+		runCommand(openFilesCmd  +srcFilesToOpen, directory.getAbsolutePath());
+	}
+	
+	public void openJavaFilesInNotepadFrom(String dir) {
+		runCommand(openFilesCmd +dir+File.separator.trim() +srcFilesToOpen, directory.getAbsolutePath());
+	}
+	
+	protected void runCommand(String command,String path){
+		try {
+			System.err.println("Executed: " +command);
+			System.err.println("in: " +path);
+			Runtime rt = Runtime.getRuntime();
+			File dir = new File(path);			
+			rt.exec("cmd.exe /c " +command, null, dir);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void makeDir(String dir) {
+		Path path = Paths.get(dir);
+		if(!Files.exists(path)) {
+			try {
+				Files.createDirectory(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void runCommand(String cmd) {
+		runCommand(cmd,dirPath);
+	}
+	
+	public void openMarkingSlip(){
+		runCommand("start excel " + markingSlip.getFilename(), markingSlip.getDirPath());
+	}
+	
+	public String getPath() {
+		return dirPath;
 	}
 
 }

@@ -1,0 +1,5 @@
+package com.ta.core.actions;
+
+public class ExtractArchive implements BatchProcess.ItemAction {
+
+}

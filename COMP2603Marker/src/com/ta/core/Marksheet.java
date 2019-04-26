@@ -416,4 +416,8 @@ public class Marksheet {
 		aCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		return aCellStyle;
 	}
+	
+	public String getFilename(){
+		return filename;
+	}
 }

@@ -1,0 +1,18 @@
+package com.ta.core;
+
+import java.io.File;
+
+public class ValidateZip implements BatchProcess.ItemAction {
+
+	@Override
+	public boolean doAction(File item) {
+    	if(item.isDirectory())
+    		return BatchProcess.performActionInFile(item,this);
+    	else if(isAnAllowedArchive(item.getName(),archiveFormats)){
+    		return BatchProcess.openArchive(item.getAbsolutePath());
+    	}
+
+    	return true;
+	}
+
+}

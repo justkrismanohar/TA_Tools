@@ -9,7 +9,7 @@ public class CompilationMarker extends Marker {
 	
 	public CompilationMarker(){}
 	
-	public CompilationMarker(Marksheet m){
+	public CompilationMarker(MarkingProcess m){
 		super(m);
 	}
 	

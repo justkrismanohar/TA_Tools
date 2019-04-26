@@ -13,11 +13,16 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class AutoMarker {
 	
@@ -127,6 +132,11 @@ public class AutoMarker {
 	
 	public static Class getClassFromDir(String dir, String className){
 	//https://stackoverflow.com/questions/6219829/method-to-dynamically-load-java-class-files
+		
+//		String[] classNameParts = className.split("\\"+File.separator);
+//		dir = updateDirPath(classNameParts,dir);
+//		className = extractFilename(classNameParts);
+//		
 		File file = new File(dir);
 		try {
 		    // Convert File to a URL
@@ -138,6 +148,7 @@ public class AutoMarker {
 
 		    // Load in the class; MyClass.class should be located in
 		    // the directory file:/c:/myclasses/com/mycompany
+		    
 		    Class cls = cl.loadClass(className);
 		    return cls;
 		} catch (MalformedURLException e) {
@@ -180,6 +191,10 @@ public class AutoMarker {
 		List<String> options = new ArrayList<String>();
 		options.addAll(Arrays.asList("-classpath", classpath));
 		
+		String[] filenameParts = filename.split("\\.");
+		dirPath = updateDirPath(filenameParts, dirPath);
+		filename = extractFilename(filenameParts);
+		
 		Iterable<? extends JavaFileObject> compilationUnits=fileManager.getJavaFileObjects(dirPath+ File.separator + filename);
 		CompilationTask task=compiler.getTask(null,fileManager,null,options,null,compilationUnits);
 		boolean result = task.call();
@@ -187,21 +202,67 @@ public class AutoMarker {
 		
 	}
 	 
-
+	
+	private static String updateDirPath(String[] filenameParts,String dirPath) {
+		int srcNameIndex = filenameParts.length -2;
+		for(int i=0; i < srcNameIndex; i++)
+			dirPath+= File.separator + filenameParts[i];
+		return dirPath;		
+	}
+	
+	private static String extractFilename(String[] filenameParts) {
+		int srcNameIndex = filenameParts.length -2;
+		return filenameParts[srcNameIndex] + "." +filenameParts[srcNameIndex+1];
+	}
+	
 	public static boolean checkIfFileExists(String dirPath, String filename){		
-		try{
-			File dir = new File(dirPath);
-			String[] files = dir.list();
-		    for(String file : files)
-		        if(file.equals(filename))
-		            return true;
-		    System.out.println(filename + " not found in "+ dirPath);
-		    return false;
-		}
-		catch (Exception e){
-			System.out.println("Dir Not found " + dirPath + " cannot search for "+filename);
+		
+		String[] filenameParts = filename.split("\\.");
+		dirPath = updateDirPath(filenameParts,dirPath);
+		filename = extractFilename(filenameParts);
+		String path = dirPath+File.separator+filename;
+		
+		File f = new File(path);
+		if(!f.isFile()) {
+			System.err.println("NOT found "+ path);
 			return false;
 		}
+		return true;
+		
+//		//THE .LIST() IS UNRELIABLE!!!!
+//		try{
+//			
+//			String[] filenameParts = filename.split("\\.");
+//			dirPath = updateDirPath(filenameParts,dirPath);
+//			filename = extractFilename(filenameParts);
+//			
+//			File dir = new File(dirPath);
+//			
+//			File[] files = null;
+//			for(int i =0; files == null && i < 3; i++)
+//				files = dir.listFiles();
+//			
+//		    for(File file : files)
+//		        if(file.getName().equals(filename))
+//		            return true;
+//		    
+//			
+//			
+////			File dir = new File(dirPath);
+////			
+////			String[] files = dir.list();
+////		    for(String file : files)
+////		        if(file.equals(filename))
+////		            return true;
+////		    
+//		    System.err.println(filename + " not found in "+ dirPath);
+//		    return false;
+//		}
+//		catch (Exception e){
+//			e.printStackTrace();
+//			System.out.println("Dir Not found " + dirPath + " cannot search for "+filename);
+//			return false;
+//		}
 	}
 
 	public static void println(Object thing){

@@ -1,0 +1,39 @@
+package com.ta.core.actions;
+import java.io.File;
+
+import com.ta.core.BatchProcess;
+import com.ta.core.extraction.Extract;
+
+public class ExtractArchive implements BatchProcess.ItemAction {
+
+	
+	private String[] archiveFormats;
+	private String outputDir;
+	
+	public ExtractArchive(String[] archiveFormats,String outputDir){
+		this.archiveFormats = archiveFormats;
+		this.outputDir = outputDir;
+	}
+	
+	@Override
+	public boolean doAction(File item) {
+    	if(item.isDirectory())
+    		return BatchProcess.performActionInFile(item,this);
+    	else if(BatchProcess.isAnAllowedArchive(item.getName(),archiveFormats)){
+    		try{
+				Extract.extract(outputDir+File.separator+item.getParentFile().getName(), item.getAbsolutePath(),format);
+				return true;
+			}
+			catch(Exception e){
+				System.err.println("Error Extracting");
+				System.err.println(item.getAbsolutePath());
+				e.printStackTrace();
+				return false;
+			}
+    	}
+    	
+    	return true;
+	}
+	}
+
+}

@@ -1,0 +1,27 @@
+import com.ta.core.AutoMarker;
+import com.ta.core.Marker;
+import com.ta.core.Marksheet;
+
+public class MarkA3 extends Marker{
+	
+	
+	String [] studentClassNames = new String[] {
+			"GradeSlip.java"
+			,"GradingApplication.java"
+			,"GradingGUI.java"
+			,"MasterMarkSheet.java"
+	};
+	
+	@Override
+	public void mark() {
+		//compile files
+		for(String c : studentClassNames)
+			if(!AutoMarker.canComplie(markingProcess.getPath(), c))
+				System.err.println(c);
+		
+		//run gui
+		markingProcess.openJavaFilesInNotepad();
+		markingProcess.openMarkingSlip();
+	}
+
+}

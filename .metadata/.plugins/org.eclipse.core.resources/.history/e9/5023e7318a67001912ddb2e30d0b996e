@@ -1,0 +1,59 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import com.ta.core.AutoMarker;
+import com.ta.core.CompilationResults;
+import com.ta.core.Marker;
+import com.ta.core.Marksheet;
+
+public class MarkA3 extends Marker{
+	
+	String packageName = "gradingapplication";
+	
+	String [] studentClassNames = new String[] {
+			packageName+".GradeSlip"
+			,packageName+".MasterMarkSheet"
+			,packageName+".GradingGUI"
+			,packageName+".GradingApplication"
+	};
+	
+	
+	private CompilationResults complieAndLoadStudentClasses(){
+		String[] classes = studentClassNames;
+		String dirPath = markingProcess.getPath();
+		AutoMarker.clearExternallyLoadedClasses();
+		return AutoMarker.loadAndComplieClassesFromDir(classes, dirPath);	
+	}
+	
+	@Override
+	public void mark() {
+		//move java files to folder
+		markingProcess.runCommand("mkdir "+packageName);
+		markingProcess.runCommand("move *.java "+packageName);
+		//boolean ans = AutoMarker.canComplie(markingProcess.getPath(),packageName+File.separator+"GradingApplication.java");
+		//System.out.println(ans);
+		//markingProcess.runCommand("start javac "+packageName+"\\GradingApplication.java");
+		//markingProcess.runCommand("java "+packageName+".GradingApplication");
+		
+		//compile files
+		CompilationResults cr = complieAndLoadStudentClasses();
+		for(String c : cr.getFailureCompilationArray())
+			System.err.println(c);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter String");
+        try {
+			String s = br.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//run gui
+		//markingProcess.openJavaFilesInNotepadFrom(packageName);
+		//markingProcess.openMarkingSlip();
+		
+	}
+
+}

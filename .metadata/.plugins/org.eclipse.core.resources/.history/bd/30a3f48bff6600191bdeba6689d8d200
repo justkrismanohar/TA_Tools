@@ -1,0 +1,121 @@
+
+
+import java.io.File;
+
+import com.ta.core.MarkingProcess;
+import com.ta.core.Marksheet;
+import com.ta.core.BatchProcess;
+import com.ta.core.ManualMarker;
+import com.ta.core.BatchProcess.ItemAction;
+import com.ta.core.actions.Action;
+import com.ta.core.actions.ExtractArchive;
+import com.ta.core.actions.ValidateZip;
+import com.ta.core.Marker;
+import com.ta.sample.InsertHeader;
+
+public class MarkA3Process extends BatchProcess {
+	
+    public static void main(String[] args){
+    	
+		String[] archiveFormats = {"zip","rar",".7z"};
+		String[] format = {"java"};
+		
+    	String outputDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\Kris-output";
+    	String markingSlipName = "Assignment_3_Makring_Slip.xlsx";
+    	String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\2-Kris-46";
+    	String sourceMarkSlipPath = "C:\\Users\\krism\\Downloads\\A3\\Submissions" + File.separator + markingSlipName;
+    	
+    	//String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\1-Patrice-55";
+    	
+    	File file = new File(sourceDir);
+    	
+    	Action validateZip = new ValidateZip(file, archiveFormats);
+    	
+    	Action extractArchive = new ExtractArchive(archiveFormats,format,file,outputDir){
+    		@Override
+    		public boolean doBefore(File item){
+    			
+    			String currentDir = outputDir + File.separator+ item.getParentFile().getName();
+				String markSlipOutputPath = currentDir + File.separator + markingSlipName;
+    			
+    			try{
+    				//BatchProcess.copyAndReplaceFileTo(sourceMarkSlipPath,markSlipOutputPath);
+    				BatchProcess.copyFileIfDoesNotExistTo(sourceMarkSlipPath,markSlipOutputPath);
+    				BatchProcess.writeStudentNameToMarkSlip(markingSlipName, "A3", new File(currentDir));    		
+    			}
+    			catch(Throwable t){
+    				t.printStackTrace();
+    				return false;
+    			}
+    			
+    			return true;
+    		}
+    	};
+    	
+    	
+    	try {
+    		validateZip.run();
+    		extractArchive.run();
+    		
+            ItemAction markA1 = new ItemAction(){
+
+    			@Override
+    			public boolean doAction(File fileItem) {
+    				if(fileItem.isDirectory()){
+    					String filename = markingSlipName;
+    					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A2");
+    					pm.addMarker(new InsertHeader(fileItem.getName(),"COMP 2603","Assignment #2"));
+    					
+    					//reflective checks for methods
+    					pm.addMarker(new MarkA2TestCases(testCasesDir));
+    					pm.addMarker(new ManualMarker("Additional Comments", "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2\\src\\"+"ac.txt"));
+    					pm.markAll();
+    					pm.saveMarkingSlip();
+    					//should move files to a marked folder so don't accidentally overwrite them
+    				}
+    				return true;
+    			}
+            	
+            };
+            
+            performActionInFile(new File(outputDir), markA1);    		
+    	}
+    	catch(Throwable t){
+    		System.err.println(t.getMessage());
+    	}
+    	
+//    	try{
+//    		
+//            if(performActionInFile(file,new ValidateZip(archiveFormats))){
+//            	System.out.println("All archives OK");
+//            	
+//            }
+//    	}
+//    	catch(Throwable t){
+//    		t.printStackTrace();
+//    		
+//    	}
+    	
+//    	ItemAction markA1 = new ItemAction(){
+//
+//			@Override
+//			public boolean doAction(File fileItem) {
+//				if(fileItem.isDirectory()){
+//					String filename = markingSlipName;
+//					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A3");
+//					pm.addMarker(new InsertHeader(fileItem.getName(),"COMP 2603","Assignment #3"));
+//					
+//					pm.saveMarkingSlip();
+//					//should move files to a marked folder so don't accidentally overwrite them
+//				}
+//				return true;
+//			}
+//        	
+//        };
+//        
+//        performActionInFile(new File(outputDir), markA1);
+        
+        
+    }
+        
+}

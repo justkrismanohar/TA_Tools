@@ -163,6 +163,7 @@ public class COMP0200 extends BatchProcess{
             step2(extractArchive, file);
 
          	//Step 3 mark files 
+            //UPDATE WITH FILES FROM EMAIL
             int startingFolder = 0, endingFolder = -1;
          	//step3(outputDir, markA1,startingFolder,endingFolder);
 

@@ -1,1 +1,6 @@
 1556149730860	Rename type 'MarkA2'
+1556156709479	Extract method 'writeStudentNameToMarkSlip'
+1556156935428	Extract local variable 'currentDir'
+1556158052752	Rename type 'MarkA3'
+1556158451905	Rename local variable 'markA1'
+1556218047556	Extract method 'pauseWithMessage'
