@@ -66,7 +66,7 @@ public class MarkA3Process extends BatchProcess {
     					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A3");
     					pm.addMarker(new MarkA3());
     					pm.markAll();
-    					pm.saveMarkingSlip();
+    					//pm.saveMarkingSlip();
     				}
     				
     				return true;
@@ -74,7 +74,44 @@ public class MarkA3Process extends BatchProcess {
             };
             
             //performActionInFile(new File(outputDir), markA3); 
-            performActionInFileFromStartToEnd(new File(outputDir), markA3,0,-1);
+            //performActionInFileFromStartToEnd(new File(outputDir), markA3,0,-1);
+            String masterSheetName = "Master.xlsx";
+            ItemAction buildMasterMarksheet = new ItemAction(){
+
+    			@Override
+    			public boolean doAction(File item) {
+    				
+    				if(item.isDirectory()){
+    					
+    					String filename = markingSlipName;
+    					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+    					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+    					
+    					if(!markingSlip.hasText(MarkingProcess.getFinalTotalPrefix(), 1))
+    						System.out.print("CEHCK "+ item.getName());
+    					else{
+    						String name = item.getName().split("_")[0];//To parse UWI format. Make this custom?
+    						MarkingProcess.getMasterSheet(outputDir, masterSheetName).writeRowln(name,markingSlip.getTextFromColInLastRow(2));
+    						System.out.println(item.getName()+" " + markingSlip.getTextFromColInLastRow(2));
+    					}
+    					
+    					markingSlip.close();
+    				}
+    				return true;
+    			}
+            	
+            };
+            
+            ItemAction saveMasterMarksheet = new ItemAction(){
+    			@Override
+    			public boolean doAction(File item) {
+    				MarkingProcess.getMasterSheet(outputDir, masterSheetName).writeExcelFile();
+    				return true;
+    			}
+            };
+            
+            performActionInFileFromStartToEndAndCloseAction(new File(outputDir), buildMasterMarksheet,0,-1,saveMasterMarksheet);
+    			
     	}
     	catch(Throwable t){
     		System.err.println(t.getMessage());

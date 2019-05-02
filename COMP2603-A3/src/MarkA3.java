@@ -49,9 +49,10 @@ public class MarkA3 extends Marker{
 			System.err.println(c);
 
         //run gui
-		//markingProcess.openJavaFilesInNotepadFrom(packageName);
-		//markingProcess.openMarkingSlip();
-		//markingProcess.runCommand("java "+packageName+".GradingApplication");
+		markingProcess.openJavaFilesInNotepadFrom(packageName);
+		markingProcess.openMarkingSlip();
+		markingProcess.runCommand("java "+packageName+".GradingApplication");
+		markingProcess.runCommand("start echo \"java "+packageName+".GradingApplication\"");
 		
 		
 		pauseWithMessage("Start Next Folder");

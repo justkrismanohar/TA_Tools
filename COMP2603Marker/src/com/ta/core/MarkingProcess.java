@@ -17,7 +17,7 @@ public class MarkingProcess {
 	
 	//TO DO: PULL FROM CONFIG FILE
 	private static String finalTotalPrefix = "Final Total";
-	private static String sheetWithMarksName = "A1";
+	private static String sheetWithMarksName = "A3";
 	private static String sheetWithMasterMarksName = "Final Marks";
 	
 	protected String openFilesCmd = "\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" -nosession -multiInst ";

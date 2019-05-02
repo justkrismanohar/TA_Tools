@@ -11,7 +11,9 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -97,7 +99,9 @@ public class Marksheet {
 	
 	public String getTextFromCell(int row, int col){
 		if(this.sheet.getRow(row) == null ) return "";
-		Object val = this.sheet.getRow(row).getCell(col);
+		FormulaEvaluator evaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
+		Cell cell = this.sheet.getRow(row).getCell(col);;
+		String val = evaluator.evaluate(cell).formatAsString();
 		if(val == null) return "";
 		return val.toString();
 	}
