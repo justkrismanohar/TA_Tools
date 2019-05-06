@@ -1,0 +1,11 @@
+import com.ta.core.Marker;
+
+public class FixTypo extends Marker{
+
+	@Override
+	public void mark() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

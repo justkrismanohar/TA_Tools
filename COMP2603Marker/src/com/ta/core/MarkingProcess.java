@@ -6,7 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MarkingProcess {
 	
@@ -62,6 +64,40 @@ public class MarkingProcess {
 	public static String getFinalTotalPrefix(){
 		return finalTotalPrefix;
 	}
+	
+	
+	private static List<String> getAllFilesWithExtensionButNotIn(File dir, String extension, Set<String> haveFilenames) {
+		ArrayList<String> out = new ArrayList<String>();
+		
+		File[] contents = dir.listFiles();
+		
+		int endIndex = contents.length-1;
+		
+		File item;
+		
+		for(int k = 0; k < contents.length && k <= endIndex; k++){
+			item = contents[k];
+			if(!item.isDirectory()) {
+				String itemName = item.getName();
+				String[] parts = itemName.split("\\.");
+				if(parts[parts.length-1].equals(extension) && !haveFilenames.contains(parts[0]))
+					out.add(item.getName());
+			}
+		}
+		
+		return out;
+		
+//		String names = "";
+//		for(String n : out) {
+//			names += n+" ";
+//		}
+//		return names;
+	}
+	
+	public static List<String> getAllFilesWithExtension(File dir, String extension) {
+		return getAllFilesWithExtensionButNotIn(dir, extension, new HashSet<String>());
+	}
+	
 	
 	public void markAll(){
 		

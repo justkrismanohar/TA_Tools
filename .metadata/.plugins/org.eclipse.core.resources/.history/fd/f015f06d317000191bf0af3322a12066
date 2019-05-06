@@ -1,0 +1,11 @@
+import com.ta.core.Marker;
+
+public class FixTypo extends Marker{
+
+	@Override
+	public void mark() {
+		List<String> xlfiles = markingProcess.getAllFilesWithExtension("xlsx");
+		
+	}
+
+}

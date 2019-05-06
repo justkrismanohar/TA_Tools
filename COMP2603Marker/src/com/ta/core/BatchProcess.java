@@ -6,6 +6,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
@@ -137,8 +138,12 @@ public class BatchProcess {
 	
 	protected static void copyAndReplaceFileTo(String source, String destination){
 		try {
+			Path target  = new File(destination).toPath();
+			
+			Files.createDirectories(target.getParent());//does not throw error if parent directory already exists
+			
 			Files.copy( (new File(source).toPath()),
-						(new File(destination)).toPath(), 
+						target, 
 						StandardCopyOption.REPLACE_EXISTING);
 			
 			

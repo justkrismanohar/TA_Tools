@@ -1,6 +1,7 @@
 
 
 import java.io.File;
+import java.util.List;
 
 import com.ta.core.MarkingProcess;
 import com.ta.core.Marksheet;
@@ -22,8 +23,10 @@ public class MarkA3Process extends BatchProcess {
 		String[] format = {"java"};
 		
     	String outputDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\output";
+		//String outputDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
     	String markingSlipName = "Assignment_3_Makring_Slip.xlsx";
-    	String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\2-Kris-46";
+    	//String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\2-Kris-46";
+    	String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late";
     	String sourceMarkSlipPath = "C:\\Users\\krism\\Downloads\\A3\\Submissions" + File.separator + markingSlipName;
     	
     	//String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\1-Patrice-55";
@@ -75,6 +78,7 @@ public class MarkA3Process extends BatchProcess {
             
             //performActionInFile(new File(outputDir), markA3); 
             //performActionInFileFromStartToEnd(new File(outputDir), markA3,0,-1);
+            
             String masterSheetName = "Master.xlsx";
             ItemAction buildMasterMarksheet = new ItemAction(){
 
@@ -110,8 +114,52 @@ public class MarkA3Process extends BatchProcess {
     			}
             };
             
-            performActionInFileFromStartToEndAndCloseAction(new File(outputDir), buildMasterMarksheet,0,-1,saveMasterMarksheet);
+            //performActionInFileFromStartToEndAndCloseAction(new File(outputDir), buildMasterMarksheet,0,-1,saveMasterMarksheet);
     			
+            
+            
+            File pDir  = new File("C:\\Users\\krism\\Downloads\\A3\\Submissions");
+            Marksheet fixed = new Marksheet(pDir.getAbsolutePath(),"Assignment_3_fixed.xlsx",true);
+			fixed.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+//            
+//			ItemAction copyColumn = new ItemAction() {
+//
+//				@Override
+//				public boolean doAction(File item) {
+//					String filename = markingSlipName;
+//					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+//					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+//					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
+//					markingSlip.writeExcelFile();
+//					
+//					return true;
+//				}
+//            	
+//            };
+//            
+//            performActionInFileFromStartToEnd(new File(outputDir), copyColumn,0,0);
+                  
+            ItemAction fixTypoAction = new ItemAction(){
+    			@Override
+    			public boolean doAction(File fileItem) {
+    				if(fileItem.isDirectory()){
+    								
+    					List<String> xlfiles = MarkingProcess.getAllFilesWithExtension(fileItem,"xlsx");
+    					for(String filename : xlfiles) {
+        					Marksheet markingSlip = new Marksheet(fileItem.getAbsolutePath(), filename, true);
+        					markingSlip.loadOrCreateSheet("A1");
+        					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
+        					markingSlip.writeExcelFile();
+    						System.out.println(filename);
+    					}
+    				}
+    				
+    				return true;
+    			}
+            };
+            String patriceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\Patrice-marked-Fixed";
+            performActionInFileFromStartToEnd(new File(patriceDir), fixTypoAction,0,0);
+            
     	}
     	catch(Throwable t){
     		System.err.println(t.getMessage());

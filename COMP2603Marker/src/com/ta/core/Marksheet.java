@@ -84,6 +84,34 @@ public class Marksheet {
 		initMarksheet(dir_path, filename);
 	}
 	
+	public void copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(int col,Marksheet otherSheet) {
+		int lastRow = sheet.getLastRowNum();
+		for(int i=0; i < lastRow; i++) {
+			
+			try {
+				Cell myCell = getCell(i,col);
+				String text = otherSheet.getTextFromCell(i, col);
+				//System.out.println(text);
+				myCell.setCellValue(text);
+			}
+			catch(Throwable t) {
+				//System.out.println("Cell "+i+" "+col+" probably blank");
+				//System.exit(1);
+			}
+		}
+	}
+	
+	
+	private Cell getCell(int row, int col) throws Exception {
+		try {
+			return sheet.getRow(row).getCell(col);
+		}
+		catch(Throwable t){
+			throw new Exception("Cannot get cell "+row +" "+ col);
+			
+		}
+	}
+	
 	public boolean hasText(String finalMarkPrefix, int col){
 		//checks to see if last row, has final mark in it
 		int lastRow = sheet.getLastRowNum();
@@ -99,11 +127,17 @@ public class Marksheet {
 	
 	public String getTextFromCell(int row, int col){
 		if(this.sheet.getRow(row) == null ) return "";
-		FormulaEvaluator evaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
-		Cell cell = this.sheet.getRow(row).getCell(col);;
-		String val = evaluator.evaluate(cell).formatAsString();
-		if(val == null) return "";
-		return val.toString();
+		try {
+			FormulaEvaluator evaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
+		
+			Cell cell = this.sheet.getRow(row).getCell(col);			
+			String val = evaluator.evaluate(cell).getStringValue();
+			if(val == null) return "";
+			return val;
+		}
+		catch(Throwable t) {
+			return "";
+		}
 	}
 	
 	public void close(){
@@ -304,6 +338,8 @@ public class Marksheet {
 	
 	public boolean loadOrCreateSheet(String sheetName){
 		try{
+			
+			
 			this.sheet = workbook.getSheet(sheetName);
 			
 			//https://stackoverflow.com/questions/6743615/apache-poi-change-page-format-for-excel-worksheet
@@ -326,6 +362,7 @@ public class Marksheet {
 		catch(Throwable e){ }
 		finally{
 			if (this.sheet == null){
+				System.err.println("Cannot find sheet "+ sheetName+ " in "+ this.filename+" creating it");
 				this.sheet = workbook.createSheet(sheetName);
 			}
 			//System.out.println(currentRow);

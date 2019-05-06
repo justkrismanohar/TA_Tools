@@ -1,0 +1,202 @@
+
+
+import java.io.File;
+import java.util.List;
+
+import com.ta.core.MarkingProcess;
+import com.ta.core.Marksheet;
+import com.ta.core.BatchProcess;
+import com.ta.core.ManualMarker;
+import com.ta.core.BatchProcess.ItemAction;
+import com.ta.core.CompilationMarker;
+import com.ta.core.actions.Action;
+import com.ta.core.actions.ExtractArchive;
+import com.ta.core.actions.ValidateZip;
+import com.ta.core.Marker;
+import com.ta.sample.InsertHeader;
+
+public class MarkA3Process extends BatchProcess {
+	
+    public static void main(String[] args){
+    	
+		String[] archiveFormats = {"zip","rar",".7z"};
+		String[] format = {"java"};
+		
+    	String outputDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\output";
+		//String outputDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
+    	String markingSlipName = "Assignment_3_Makring_Slip.xlsx";
+    	//String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\2-Kris-46";
+    	String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late";
+    	String sourceMarkSlipPath = "C:\\Users\\krism\\Downloads\\A3\\Submissions" + File.separator + markingSlipName;
+    	
+    	//String sourceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\1-Patrice-55";
+    	
+    	File file = new File(sourceDir);
+    	
+    	Action validateZip = new ValidateZip(file, archiveFormats);
+    	
+    	Action extractArchive = new ExtractArchive(archiveFormats,format,file,outputDir){
+    		@Override
+    		public boolean doBefore(File item){
+    			
+    			String currentDir = outputDir + File.separator+ item.getParentFile().getName();
+				String markSlipOutputPath = currentDir + File.separator + markingSlipName;
+    			
+    			try{
+    				BatchProcess.copyAndReplaceFileTo(sourceMarkSlipPath,markSlipOutputPath);
+    				//BatchProcess.copyFileIfDoesNotExistTo(sourceMarkSlipPath,markSlipOutputPath);
+    				BatchProcess.writeStudentNameToMarkSlip(markingSlipName, "A3", new File(currentDir));    		
+    			}
+    			catch(Throwable t){
+    				t.printStackTrace();
+    				return false;
+    			}
+    			
+    			return true;
+    		}
+    	};
+    	
+    	
+    	try {
+    		//validateZip.run();
+    		//extractArchive.run();
+    		
+            ItemAction markA3 = new ItemAction(){
+    			@Override
+    			public boolean doAction(File fileItem) {
+    				if(fileItem.isDirectory()){
+    					String filename = markingSlipName;
+    					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A3");
+    					pm.addMarker(new MarkA3());
+    					pm.markAll();
+    					//pm.saveMarkingSlip();
+    				}
+    				
+    				return true;
+    			}
+            };
+            
+            //performActionInFile(new File(outputDir), markA3); 
+            //performActionInFileFromStartToEnd(new File(outputDir), markA3,0,-1);
+            
+            String masterSheetName = "Master.xlsx";
+            ItemAction buildMasterMarksheet = new ItemAction(){
+
+    			@Override
+    			public boolean doAction(File item) {
+    				
+    				if(item.isDirectory()){
+    					
+    					String filename = markingSlipName;
+    					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+    					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+    					
+    					if(!markingSlip.hasText(MarkingProcess.getFinalTotalPrefix(), 1))
+    						System.out.print("CEHCK "+ item.getName());
+    					else{
+    						String name = item.getName().split("_")[0];//To parse UWI format. Make this custom?
+    						MarkingProcess.getMasterSheet(outputDir, masterSheetName).writeRowln(name,markingSlip.getTextFromColInLastRow(2));
+    						System.out.println(item.getName()+" " + markingSlip.getTextFromColInLastRow(2));
+    					}
+    					
+    					markingSlip.close();
+    				}
+    				return true;
+    			}
+            	
+            };
+            
+            ItemAction saveMasterMarksheet = new ItemAction(){
+    			@Override
+    			public boolean doAction(File item) {
+    				MarkingProcess.getMasterSheet(outputDir, masterSheetName).writeExcelFile();
+    				return true;
+    			}
+            };
+            
+            //performActionInFileFromStartToEndAndCloseAction(new File(outputDir), buildMasterMarksheet,0,-1,saveMasterMarksheet);
+    			
+            
+            
+            File pDir  = new File("C:\\Users\\krism\\Downloads\\A3\\Submissions");
+            Marksheet fixed = new Marksheet(pDir.getAbsolutePath(),"Assignment_3_fixed.xlsx",true);
+			fixed.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+//            
+//			ItemAction copyColumn = new ItemAction() {
+//
+//				@Override
+//				public boolean doAction(File item) {
+//					String filename = markingSlipName;
+//					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+//					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+//					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
+//					markingSlip.writeExcelFile();
+//					
+//					return true;
+//				}
+//            	
+//            };
+//            
+//            performActionInFileFromStartToEnd(new File(outputDir), copyColumn,0,0);
+                  
+            ItemAction fixTypoAction = new ItemAction(){
+    			@Override
+    			public boolean doAction(File fileItem) {
+    				if(fileItem.isDirectory()){
+    								
+    					List<String> xlfiles = MarkingProcess.getAllFilesWithExtension(fileItem,"xlsx");
+    					for(String filename : xlfiles) {
+        					Marksheet markingSlip = new Marksheet(fileItem.getAbsolutePath(), filename, true);
+        					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+        					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
+        					markingSlip.writeExcelFile();
+    						System.out.println(s);
+    					}
+    				}
+    				
+    				return true;
+    			}
+            };
+            String patriceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\Patrice-marked-Fixed";
+            performActionInFileFromStartToEnd(new File(patriceDir), fixTypoAction,0,0);
+            
+    	}
+    	catch(Throwable t){
+    		System.err.println(t.getMessage());
+    	}
+    	
+//    	try{
+//    		
+//            if(performActionInFile(file,new ValidateZip(archiveFormats))){
+//            	System.out.println("All archives OK");
+//            	
+//            }
+//    	}
+//    	catch(Throwable t){
+//    		t.printStackTrace();
+//    		
+//    	}
+    	
+//    	ItemAction markA1 = new ItemAction(){
+//
+//			@Override
+//			public boolean doAction(File fileItem) {
+//				if(fileItem.isDirectory()){
+//					String filename = markingSlipName;
+//					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A3");
+//					pm.addMarker(new InsertHeader(fileItem.getName(),"COMP 2603","Assignment #3"));
+//					
+//					pm.saveMarkingSlip();
+//					//should move files to a marked folder so don't accidentally overwrite them
+//				}
+//				return true;
+//			}
+//        	
+//        };
+//        
+//        performActionInFile(new File(outputDir), markA1);
+        
+        
+    }
+        
+}
