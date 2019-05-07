@@ -121,27 +121,23 @@ public class MarkA3Process extends BatchProcess {
             File pDir  = new File("C:\\Users\\krism\\Downloads\\A3\\Submissions");
             Marksheet fixed = new Marksheet(pDir.getAbsolutePath(),"Assignment_3_fixed.xlsx",true);
 			fixed.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
-            
+//            
 //			ItemAction copyColumn = new ItemAction() {
 //
 //				@Override
 //				public boolean doAction(File item) {
-//					
-//					if(item.isDirectory()) {
-//						String filename = markingSlipName;
-//						Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
-//						markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
-//						markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(2,0, fixed);
-//						markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
-//						markingSlip.writeExcelFile();
-//					}
+//					String filename = markingSlipName;
+//					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+//					markingSlip.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+//					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
+//					markingSlip.writeExcelFile();
 //					
 //					return true;
 //				}
 //            	
 //            };
 //            
-//            performActionInFileFromStartToEnd(new File(outputDir), copyColumn,0,-1);
+//            performActionInFileFromStartToEnd(new File(outputDir), copyColumn,0,0);
                   
             ItemAction fixTypoAction = new ItemAction(){
     			@Override
@@ -152,7 +148,7 @@ public class MarkA3Process extends BatchProcess {
     					for(String filename : xlfiles) {
         					Marksheet markingSlip = new Marksheet(fileItem.getAbsolutePath(), filename, true);
         					markingSlip.loadOrCreateSheet("A1");
-        					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(2,0, fixed);
+        					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(0, fixed);
         					markingSlip.copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(1, fixed);
         					markingSlip.writeExcelFile();
     						System.out.println(filename);
