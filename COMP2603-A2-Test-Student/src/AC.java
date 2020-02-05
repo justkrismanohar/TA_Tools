@@ -24,5 +24,4 @@ public class AC implements Device{
     public void turnOff(){ isOn = false;}
     public int coolsBy(){ return 5 ;}
     
-    
 }

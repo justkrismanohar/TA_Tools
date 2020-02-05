@@ -1,6 +1,7 @@
 INDEX VERSION 1.131+C:\Users\krism\Projects\Java\.metadata\.plugins\org.eclipse.jdt.core
 148409970.index
 3844502919.index
+<<<<<<< HEAD
 3818879166.index
 648612256.index
 1689259093.index
@@ -31,11 +32,29 @@ INDEX VERSION 1.131+C:\Users\krism\Projects\Java\.metadata\.plugins\org.eclipse.
 3666609613.index
 790325338.index
 559129880.index
+=======
+2802098370.index
+2043264706.index
+1948397627.index
+3244250798.index
+3430224812.index
+1662892901.index
+1603860157.index
+1148412907.index
+399643337.index
+155390697.index
+3266346795.index
+1864177938.index
+2677357829.index
+1148505013.index
+790325338.index
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 3092721152.index
 144518173.index
 746091473.index
 4242865875.index
 1601300883.index
+<<<<<<< HEAD
 922380862.index
 2598525018.index
 3987055441.index
@@ -45,3 +64,9 @@ INDEX VERSION 1.131+C:\Users\krism\Projects\Java\.metadata\.plugins\org.eclipse.
 2774268157.index
 194259052.index
 3141958188.index
+=======
+2598525018.index
+3987055441.index
+1042887189.index
+2774268157.index
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836

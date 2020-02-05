@@ -151,8 +151,8 @@ public class AutoMarker {
 		    
 		    Class cls = cl.loadClass(className);
 		    return cls;
-		} catch (MalformedURLException e) {
-		} catch (ClassNotFoundException e) {
+		} catch (Throwable t) {
+			t.printStackTrace();
 		}
 		return null;
 		

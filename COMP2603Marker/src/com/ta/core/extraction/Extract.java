@@ -85,6 +85,7 @@ public class Extract {
                    // String filename = item.getPath();
                     
                 	ExtractOperationResult result;
+<<<<<<< HEAD
                 	//Create the output file
                     
                     FileOutputStream fos;
@@ -94,14 +95,34 @@ public class Extract {
                     final long[] sizeArray = new long[1];
                     result = item.extractSlow(new ISequentialOutStream() {
                         public int write(byte[] data) throws SevenZipException {
+=======
+                	
+                	//#Blog
+                	//#Note
+                	//https://sourceforge.net/p/sevenzipjbind/discussion/757965/thread/5454e016/?limit=25
+                    //Write to file
+                    FileOutputStream fos;
+                	//Create the output file
+                	File file = outputDir.createDirAndFile(item);
+                	fos = new FileOutputStream(file);
+                	
+                    final long[] sizeArray = new long[1];
+                    result = item.extractSlow(new ISequentialOutStream() {
+                        
+                    	public int write(byte[] data) throws SevenZipException {
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
                             //#Blog
                             //https://stackoverflow.com/questions/19403829/decompress-files-with-7z-extension-in-java/19403933#19403933
                             //https://www.javaworld.com/article/2074973/uncompressing-7-zip-files-with-groovy-and-7-zip-jbinding.html
                             
                             try {
+<<<<<<< HEAD
                             	//Write to file
                             	fos.write(data);
                               
+=======
+                                fos.write(data);
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
                             } catch (Throwable e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
@@ -116,12 +137,23 @@ public class Extract {
                         }
                     });
                     
+<<<<<<< HEAD
                     try {
 						fos.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 
+=======
+                    try{
+                    	fos.close();
+                    }
+                    catch(Throwable t){
+                    	t.printStackTrace();
+                    	return;
+                    }
+                    
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
                     if (result == ExtractOperationResult.OK) {
                         System.out.println(String.format("%9X | %10s | %s", hash[0], sizeArray[0], item.getPath()));
                         filesExtracted++;

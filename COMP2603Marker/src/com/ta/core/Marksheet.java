@@ -84,6 +84,7 @@ public class Marksheet {
 		initMarksheet(dir_path, filename);
 	}
 	
+<<<<<<< HEAD
 	
 	public void copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(int col,Marksheet otherSheet) {
 		copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(0,col,otherSheet);
@@ -117,6 +118,10 @@ public class Marksheet {
 			throw new Exception("Cannot get cell "+row +" "+ col);
 			
 		}
+=======
+	public String getFilename(){
+		return filename;
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 	}
 	
 	public boolean hasText(String finalMarkPrefix, int col){

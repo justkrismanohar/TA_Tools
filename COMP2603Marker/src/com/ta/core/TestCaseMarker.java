@@ -96,7 +96,7 @@ public abstract class TestCaseMarker extends Marker{
 		JUnitCore junit = new JUnitCore();
     	junit.addListener(new JUnitExecutionListener(System.out,getMarksheet()));
 		markingSlip.writeRowBoldln("Test Cases");
-    	markingSlip.writeRowBoldln("Test Class","Test Method","Comment");
+    	markingSlip.writeRowBoldln("Test Class","Test Method","Mark","OutOf","Comment");
 		Result result = junit.run(getSuccessfullyCompliedClasses(testCasesCR));
 	    
         resultReport(result);    		
@@ -114,6 +114,7 @@ public abstract class TestCaseMarker extends Marker{
         }
         
         markingSlip.writeRowln("","TOTAL",Float.toString(total),"/"+Float.toString(totalOutOf));
+        System.out.println("TOTAL "+Float.toString(total)+"/"+Float.toString(totalOutOf));
 	}
 	
 	

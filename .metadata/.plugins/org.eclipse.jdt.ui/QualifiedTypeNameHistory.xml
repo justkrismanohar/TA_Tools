@@ -11,6 +11,7 @@
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="org.apache.poi.xssf.usermodel.XSSFWorkbook"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<<<<<<< HEAD
 <fullyQualifiedTypeName name="com.ta.core.BatchProcess.ItemAction"/>
 <fullyQualifiedTypeName name="com.ta.core.ValidateZip"/>
 <fullyQualifiedTypeName name="com.ta.core.actions.Action"/>
@@ -29,4 +30,7 @@
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="com.ta.core.Marker"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+=======
+<fullyQualifiedTypeName name="java.lang.System"/>
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 </qualifiedTypeNameHistroy>
