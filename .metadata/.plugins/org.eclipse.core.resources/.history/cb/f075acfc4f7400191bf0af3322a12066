@@ -76,7 +76,6 @@ public abstract class TestCaseMarker extends Marker{
 		super.setMarkingProcess(mp);
 		this.compilationMarker.setMarkingProcess(mp);
 	}
-	
 	@Override
 	public void mark() {
 		
@@ -105,8 +104,8 @@ public abstract class TestCaseMarker extends Marker{
         int testsNotExecuted = (int)(totalOutOf - actualTestsExecuted);
         
         this.total = (totalOutOf == defaultTotalOutOf) ? actualTestsExecuted : totalOutOf;
-        //this.total -= result.getFailureCount();//Seems to mess up the totals somehow. Just minus passed test from total test.
-        //this.total -= result.getIgnoreCount();
+        this.total -= result.getFailureCount();
+        this.total -= result.getIgnoreCount();
         this.total -= testsNotExecuted;
         
         if(testsNotExecuted > 0){

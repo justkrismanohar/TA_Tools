@@ -168,30 +168,19 @@ public class MarkA3Process extends BatchProcess {
             
             
             
-            String markSlipDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\markslips";
-            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
             ItemAction gatherMarkingSlips = new ItemAction(){
 
     			@Override
     			public boolean doAction(File item) {
     				
-    				if(item.isDirectory()){
-    					
-    					String filename = markingSlipName;
-    					String name = item.getName().split("_")[0];
-    					
-    					System.out.println(name);
-    					
+    				if(item.isDirectory()){    					
     					//copy
     					copyAndReplaceFileTo(item.getAbsolutePath() + File.separator + filename, markSlipDir + File.separator + name+ ".xlsx");
     				}
     				return true;
     			}
             	
-            };        
-            
-            performActionInFileFromStartToEnd(new File(gatherFromDir), gatherMarkingSlips,0,-1);
-            
+            };            
             
             
     	}

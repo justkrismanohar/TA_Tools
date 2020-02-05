@@ -168,8 +168,6 @@ public class MarkA3Process extends BatchProcess {
             
             
             
-            String markSlipDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\markslips";
-            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
             ItemAction gatherMarkingSlips = new ItemAction(){
 
     			@Override
@@ -178,9 +176,26 @@ public class MarkA3Process extends BatchProcess {
     				if(item.isDirectory()){
     					
     					String filename = markingSlipName;
-    					String name = item.getName().split("_")[0];
+    					Marksheet markingSlip = new Marksheet(item.getAbsolutePath(), filename, true);
+    					markingSlip.loadOrCreateSheet("LabExam");
     					
+    					String name = markingSlip.getTextFromCell(1, 0);
+    					name = name.split("_")[0];
     					System.out.println(name);
+    					
+    					markingSlip.setCurrentRow(0);
+    					markingSlip.writeRowln(name);
+    					markingSlip.writeRowln("");
+//    					if(!markingSlip.hasText(A1Marker.getFinalTotalPrefix(), 1))
+//    						System.out.print("CEHCK "+ item.getName());
+//    					else{
+//    						A1Marker.getMasterSheet(outputDir, masterSheetName).writeRowln(item.getName(),markingSlip.getTextFromColInLastRow(2));
+//    						System.out.println(item.getName()+" " + markingSlip.getTextFromColInLastRow(2));
+//    					}
+    					
+    					
+    					markingSlip.writeExcelFile();
+    					markingSlip.close();
     					
     					//copy
     					copyAndReplaceFileTo(item.getAbsolutePath() + File.separator + filename, markSlipDir + File.separator + name+ ".xlsx");
@@ -188,10 +203,7 @@ public class MarkA3Process extends BatchProcess {
     				return true;
     			}
             	
-            };        
-            
-            performActionInFileFromStartToEnd(new File(gatherFromDir), gatherMarkingSlips,0,-1);
-            
+            };            
             
             
     	}

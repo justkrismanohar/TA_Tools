@@ -7,7 +7,6 @@
 <fullyQualifiedTypeName name="java.lang.ProcessBuilder.Redirect"/>
 <fullyQualifiedTypeName name="java.io.FileReader"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="ManualMarker"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="org.apache.poi.xssf.usermodel.XSSFWorkbook"/>
@@ -16,7 +15,6 @@
 <fullyQualifiedTypeName name="com.ta.core.ValidateZip"/>
 <fullyQualifiedTypeName name="com.ta.core.actions.Action"/>
 <fullyQualifiedTypeName name="com.ta.core.actions.ExtractArchive"/>
-<fullyQualifiedTypeName name="com.ta.core.Marker"/>
 <fullyQualifiedTypeName name="com.ta.core.TestCaseMarker"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
@@ -27,4 +25,8 @@
 <fullyQualifiedTypeName name="org.apache.poi.ss.usermodel.CellValue"/>
 <fullyQualifiedTypeName name="org.apache.poi.ss.usermodel.FormulaEvaluator"/>
 <fullyQualifiedTypeName name="java.nio.file.Path"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="com.ta.core.Marker"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

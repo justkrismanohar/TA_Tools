@@ -118,9 +118,9 @@ public class MarkA3Process extends BatchProcess {
     			
             
             
-//            File pDir  = new File("C:\\Users\\krism\\Downloads\\A3\\Submissions");
-//            Marksheet fixed = new Marksheet(pDir.getAbsolutePath(),"Assignment_3_fixed.xlsx",true);
-//			fixed.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
+            File pDir  = new File("C:\\Users\\krism\\Downloads\\A3\\Submissions");
+            Marksheet fixed = new Marksheet(pDir.getAbsolutePath(),"Assignment_3_fixed.xlsx",true);
+			fixed.loadOrCreateSheet(MarkingProcess.getSheetWithMarksName());
             
 //			ItemAction copyColumn = new ItemAction() {
 //
@@ -165,35 +165,6 @@ public class MarkA3Process extends BatchProcess {
 //            String patriceDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\Patrice-marked-Fixed";
 //            performActionInFileFromStartToEnd(new File(patriceDir), fixTypoAction,0,0);
 //            
-            
-            
-            
-            String markSlipDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\markslips";
-            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
-            ItemAction gatherMarkingSlips = new ItemAction(){
-
-    			@Override
-    			public boolean doAction(File item) {
-    				
-    				if(item.isDirectory()){
-    					
-    					String filename = markingSlipName;
-    					String name = item.getName().split("_")[0];
-    					
-    					System.out.println(name);
-    					
-    					//copy
-    					copyAndReplaceFileTo(item.getAbsolutePath() + File.separator + filename, markSlipDir + File.separator + name+ ".xlsx");
-    				}
-    				return true;
-    			}
-            	
-            };        
-            
-            performActionInFileFromStartToEnd(new File(gatherFromDir), gatherMarkingSlips,0,-1);
-            
-            
-            
     	}
     	catch(Throwable t){
     		System.err.println(t.getMessage());

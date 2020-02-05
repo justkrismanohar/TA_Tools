@@ -169,7 +169,7 @@ public class MarkA3Process extends BatchProcess {
             
             
             String markSlipDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\markslips";
-            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
+    		
             ItemAction gatherMarkingSlips = new ItemAction(){
 
     			@Override
@@ -177,9 +177,9 @@ public class MarkA3Process extends BatchProcess {
     				
     				if(item.isDirectory()){
     					
-    					String filename = markingSlipName;
-    					String name = item.getName().split("_")[0];
     					
+    					String name = item.getName().split("_")[0];
+    					name = name.split("_")[0];
     					System.out.println(name);
     					
     					//copy
@@ -190,7 +190,7 @@ public class MarkA3Process extends BatchProcess {
             	
             };        
             
-            performActionInFileFromStartToEnd(new File(gatherFromDir), gatherMarkingSlips,0,-1);
+            performActionInFileFromStartToEnd(new File(outputDir), gatherMarkingSlips,0,-1);
             
             
             

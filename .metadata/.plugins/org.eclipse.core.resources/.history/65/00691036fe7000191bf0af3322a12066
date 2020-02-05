@@ -169,7 +169,7 @@ public class MarkA3Process extends BatchProcess {
             
             
             String markSlipDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\markslips";
-            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\late-output";
+            String gatherFromDir = "C:\\Users\\krism\\Downloads\\A3\\Submissions\\output";
             ItemAction gatherMarkingSlips = new ItemAction(){
 
     			@Override
