@@ -6,6 +6,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
@@ -21,7 +22,7 @@ public class BatchProcess {
 		public boolean doAction(File item);
 	}
 	
-	protected static boolean openArchive(String archiveFilename) {
+	public static boolean openArchive(String archiveFilename) {
         RandomAccessFile randomAccessFile = null;
         IInArchive inArchive = null;
         
@@ -58,7 +59,7 @@ public class BatchProcess {
         }
 	}
 	
-	protected static boolean isAnAllowedArchive(String filename,String[] archiveFormats){
+	public static boolean isAnAllowedArchive(String filename,String[] archiveFormats){
 		String[] parts = filename.split("\\.");//escape dot in regex. Otherwise . means any char
 		
 		int lenght = parts.length;
@@ -107,23 +108,42 @@ public class BatchProcess {
 				close.doAction(file);
 				
 			}
-        }catch(Exception e) {
+        }catch(Throwable t) {
             System.err.println("Error!");
-            e.printStackTrace();
+            t.printStackTrace();
             return false;
         }	
 		
 		return true;
 	}
 	
-	protected static boolean performActionInFile(File file, ItemAction action){
+	public static boolean performActionInFile(File file, ItemAction action){
 		return performActionInFileFromStartToEnd(file, action, 0, -1);//internal signal to do all
 	}
 
+	protected static void copyFileIfDoesNotExistTo(String source, String destination){
+		try {
+			File src = new File(source);
+			File des = new File(destination);
+			
+			if(!des.exists())
+				Files.copy( (src.toPath()),
+							des.toPath(), 
+							StandardCopyOption.REPLACE_EXISTING);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+	
 	protected static void copyAndReplaceFileTo(String source, String destination){
 		try {
+			Path target  = new File(destination).toPath();
+			
+			Files.createDirectories(target.getParent());//does not throw error if parent directory already exists
+			
 			Files.copy( (new File(source).toPath()),
-						(new File(destination)).toPath(), 
+						target, 
 						StandardCopyOption.REPLACE_EXISTING);
 			
 			
@@ -136,6 +156,22 @@ public class BatchProcess {
 		for(String filename : files){
 			copyAndReplaceFileTo(srcDir + File.separator + filename, desDir + File.separator + filename);
 		}
+	}
+	
+	protected static void writeStudentNameToMarkSlip(String markingSlipName, String sheetName, File dir) {
+		Marksheet markingSlip = new Marksheet(dir.getAbsolutePath(), markingSlipName, true);
+		markingSlip.loadOrCreateSheet(sheetName);
+		
+		String name = dir.getName();
+		name = name.split("_")[0];
+		System.err.println(name);
+		
+		markingSlip.setCurrentRow(0);
+		markingSlip.writeRowln(name);
+		markingSlip.writeRowln("");				
+		markingSlip.writeExcelFile();
+		markingSlip.close();
+	
 	}
 
 

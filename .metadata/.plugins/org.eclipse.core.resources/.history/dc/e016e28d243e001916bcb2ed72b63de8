@@ -1,3 +1,0 @@
- Attributes; rooms Array; 1; OK; Incorrect access modifier; Not initialised in constructor
- ; numRooms; 1; OK; Incorrect access modifier; Not initialised in constructor
-addRoom(String name, int seatingCapacity) (3 marks); Maximum 10 rooms allowed; 1; OK; Missing; Incorrect; Incomplete

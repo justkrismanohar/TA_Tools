@@ -1,8 +1,0 @@
-package com.ta.core;
-
-public class CompilationResults {
-	//TO DO Need a better way to do this
-	public static String CANNOT_COMPILE = "Cannot complie";
-	public static String COMPLIES = "Compiles";
-	public static String FILE_NOT_FOUND = "File not found";
-}

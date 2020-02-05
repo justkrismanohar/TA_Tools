@@ -13,23 +13,24 @@ public abstract class TestCaseMarker extends Marker{
 	
 	private static Marksheet workingMarksheet;
 	protected String sourceDir; 
+	protected String srcFilesToOpen;
 	
 	protected CompilationMarker compilationMarker;
 	
 	protected TestCaseMarker(String sourceDir){
 		this.sourceDir = sourceDir;
-		this.compilationMarker = new CompilationMarker();
+		this.compilationMarker = new CompilationMarker(markingProcess);
 	}
 	
 	public static Marksheet getWorkingMarksheet(){
 		return workingMarksheet;
 	}
 	
-	@Override
-	public void setMarksheet(Marksheet m){
-		super.setMarksheet(m);
-		this.compilationMarker.setMarksheet(m);
-	}
+//	@Override
+//	public void setMarksheet(Marksheet m){
+//		super.setMarksheet(m);
+//		this.compilationMarker.setMarksheet(m);
+//	}
 	
 	public static void resultReport(Result result) {
 	    System.out.println("Finished. Result: Failures: " +
@@ -71,13 +72,19 @@ public abstract class TestCaseMarker extends Marker{
 	}
 	
 	@Override
+	public void setMarkingProcess(MarkingProcess mp) {
+		super.setMarkingProcess(mp);
+		this.compilationMarker.setMarkingProcess(mp);
+	}
+	
+	@Override
 	public void mark() {
 		
 		Marksheet markingSlip = getMarksheet();
 		
 		
-		openJavaFilesInNotepad();
-		runCommand("start", markingSlip.getDirPath());
+		markingProcess.openJavaFilesInNotepad(srcFilesToOpen);
+		markingProcess.runCommand("start", markingSlip.getDirPath());
 		//Compile student classes
     	CompilationResults studentClassesCR = complieAndLoadStudentClasses();
     	markStudentCompilation(studentClassesCR);
@@ -98,8 +105,8 @@ public abstract class TestCaseMarker extends Marker{
         int testsNotExecuted = (int)(totalOutOf - actualTestsExecuted);
         
         this.total = (totalOutOf == defaultTotalOutOf) ? actualTestsExecuted : totalOutOf;
-        this.total -= result.getFailureCount();
-        this.total -= result.getIgnoreCount();
+        //this.total -= result.getFailureCount();//Seems to mess up the totals somehow. Just minus passed test from total test.
+        //this.total -= result.getIgnoreCount();
         this.total -= testsNotExecuted;
         
         if(testsNotExecuted > 0){

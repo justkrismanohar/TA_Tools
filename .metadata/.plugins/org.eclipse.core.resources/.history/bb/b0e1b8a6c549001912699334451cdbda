@@ -1,5 +1,0 @@
-import org.junit.runner.JUnitCore;
-
-public class A2Marker extends BatchProcess {
-
-}

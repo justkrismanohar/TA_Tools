@@ -19,7 +19,9 @@ import com.ta.sample.InsertHeader;
 public class MarkA2 extends BatchProcess {
 	
     public static void main(String[] args){
-    	String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
+    	//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
+    	String outputDir = "C:\\Users\\krism\\Downloads\\A2\\9-Missed";
+    	
     	String markingSlipName = "Assignment_2_Makring_Slip.xlsx";
     	String testCasesDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2-Test-Student\\src";
     	

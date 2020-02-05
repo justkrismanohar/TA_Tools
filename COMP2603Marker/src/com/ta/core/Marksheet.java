@@ -11,7 +11,9 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -82,6 +84,41 @@ public class Marksheet {
 		initMarksheet(dir_path, filename);
 	}
 	
+	
+	public void copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(int col,Marksheet otherSheet) {
+		copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(0,col,otherSheet);
+	
+	}
+	
+	
+	public void copyColumnFromThatMarksheetCurrentSheetIntoThisMarksheetCurrentSheet(int rowStart, int col,Marksheet otherSheet) {
+		int lastRow = sheet.getLastRowNum();
+		for(int i=rowStart; i < lastRow; i++) {
+			
+			try {
+				Cell myCell = getCell(i,col);
+				String text = otherSheet.getTextFromCell(i, col);
+				//System.out.println(text);
+				myCell.setCellValue(text);
+			}
+			catch(Throwable t) {
+				//System.out.println("Cell "+i+" "+col+" probably blank");
+				//System.exit(1);
+			}
+		}
+	}
+	
+	
+	private Cell getCell(int row, int col) throws Exception {
+		try {
+			return sheet.getRow(row).getCell(col);
+		}
+		catch(Throwable t){
+			throw new Exception("Cannot get cell "+row +" "+ col);
+			
+		}
+	}
+	
 	public boolean hasText(String finalMarkPrefix, int col){
 		//checks to see if last row, has final mark in it
 		int lastRow = sheet.getLastRowNum();
@@ -97,9 +134,17 @@ public class Marksheet {
 	
 	public String getTextFromCell(int row, int col){
 		if(this.sheet.getRow(row) == null ) return "";
-		Object val = this.sheet.getRow(row).getCell(col);
-		if(val == null) return "";
-		return val.toString();
+		try {
+			FormulaEvaluator evaluator = this.workbook.getCreationHelper().createFormulaEvaluator();
+		
+			Cell cell = this.sheet.getRow(row).getCell(col);			
+			String val = evaluator.evaluate(cell).getStringValue();
+			if(val == null) return "";
+			return val;
+		}
+		catch(Throwable t) {
+			return "";
+		}
 	}
 	
 	public void close(){
@@ -159,6 +204,20 @@ public class Marksheet {
 		return mark;
 	}
 	
+	private float promptForMark(float outOf, String outOfStr) {
+		
+		float mark = 0;
+		do {
+			System.out.print("Please enter Mark "+outOfStr+ ": ");
+			mark = readMark();
+		}
+		while(!(0<= mark && mark <= outOf));
+		
+		System.out.println();
+		
+		return mark;
+	}
+	
 	private float readMark(){
 		float mark;
 		try {
@@ -174,19 +233,6 @@ public class Marksheet {
 		return mark;
 	}
 	
-	private float promptForMark(float outOf, String outOfStr) {
-		
-		float mark = 0;
-		do {
-			System.out.print("Please enter Mark "+outOfStr+ ": ");
-			mark = readMark();
-		}
-		while(!(0<= mark && mark <= outOf));
-		
-		System.out.println();
-		
-		return mark;
-	}
 	
 	private int[] extractSelectionIds(String s) throws Exception{
 		String[] parts = s.split(" ");
@@ -299,6 +345,8 @@ public class Marksheet {
 	
 	public boolean loadOrCreateSheet(String sheetName){
 		try{
+			
+			
 			this.sheet = workbook.getSheet(sheetName);
 			
 			//https://stackoverflow.com/questions/6743615/apache-poi-change-page-format-for-excel-worksheet
@@ -321,6 +369,7 @@ public class Marksheet {
 		catch(Throwable e){ }
 		finally{
 			if (this.sheet == null){
+				System.err.println("Cannot find sheet "+ sheetName+ " in "+ this.filename+" creating it");
 				this.sheet = workbook.createSheet(sheetName);
 			}
 			//System.out.println(currentRow);
@@ -414,5 +463,9 @@ public class Marksheet {
 		aCellStyle.setWrapText(true);
 		aCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 		return aCellStyle;
+	}
+	
+	public String getFilename(){
+		return filename;
 	}
 }
