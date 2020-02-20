@@ -21,11 +21,11 @@ import com.ta.sample.InsertHeader;
 public class MarkA2 extends BatchProcess {
 	
     public static void main(String[] args){
-<<<<<<< HEAD
+//<<<<<<< HEAD
     	//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
     	String outputDir = "C:\\Users\\krism\\Downloads\\A2\\9-Missed";
     	
-=======
+//=======
     	
 		String[] archiveFormats = {"zip","rar",".7z"};
 		String[] format = {"java"};
@@ -36,11 +36,11 @@ public class MarkA2 extends BatchProcess {
 		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\1-Kris";
     	//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\4-Buggy";
 		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\5-Others";
-		String outputDir = "C:\\Users\\krism\\Downloads\\A2\\8-Queries-zip";
+		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\8-Queries-zip";
 		String markSlipDir = "C:\\Users\\krism\\Downloads\\A2\\Markslips";
 		
 		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
->>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
+//>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
     	String markingSlipName = "Assignment_2_Makring_Slip.xlsx";
     	String testCasesDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2-Test-Student\\src";
 		String masterSheetName = "Master.xlsx";

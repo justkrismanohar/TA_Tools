@@ -66,17 +66,11 @@ public class MarkingProcess {
 	}
 	
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	private static List<String> getAllFilesWithExtensionButNotIn(File dir, String extension, Set<String> haveFilenames) {
 		ArrayList<String> out = new ArrayList<String>();
 		
 		File[] contents = dir.listFiles();
-=======
-	private String getAllFilesWithExtensionButNotIn(String extension, Set<String> haveFilenames) {
-		ArrayList<String> out = new ArrayList<String>();
-		
-		File[] contents = item.listFiles();
->>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 		
 		int endIndex = contents.length-1;
 		
@@ -92,7 +86,7 @@ public class MarkingProcess {
 			}
 		}
 		
-<<<<<<< HEAD
+//<<<<<<< HEAD
 		return out;
 		
 //		String names = "";
@@ -101,25 +95,54 @@ public class MarkingProcess {
 //		}
 //		return names;
 	}
+		
+		//<<<<<<< HEAD Nonsense
+		
+		private String getAllFilesWithExtensionButNotIn(String extension, Set<String> haveFilenames) {
+			ArrayList<String> out = new ArrayList<String>();
+				
+			File[] contents = this.directory.listFiles();
+		//>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836*/
+			
+			int endIndex = contents.length-1;
+			
+			File item;
+			
+			for(int k = 0; k < contents.length && k <= endIndex; k++){
+				item = contents[k];
+				if(!item.isDirectory()) {
+					String itemName = item.getName();
+					String[] parts = itemName.split("\\.");
+					if(parts[parts.length-1].equals(extension) && !haveFilenames.contains(parts[0]))
+						out.add(item.getName());
+				}
+			}
+			
+			String names = "";
+			for(String n : out) {
+				names += n+" ";
+			}
+			return names;
+		}
 	
 	public static List<String> getAllFilesWithExtension(File dir, String extension) {
 		return getAllFilesWithExtensionButNotIn(dir, extension, new HashSet<String>());
 	}
 	
 	
-=======
+/*=======
 		String names = "";
 		for(String n : out) {
 			names += n+" ";
 		}
 		return names;
-	}
+	}*/
 	
 	private String getAllFilesWithExtension(String extension) {
 		return getAllFilesWithExtensionButNotIn(extension, new HashSet<String>());
 	}
 	
->>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
+//>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 	public void markAll(){
 		
 		
@@ -154,15 +177,15 @@ public class MarkingProcess {
 		}
 	}
 	
-	private void runCommand(String cmdToExecute) {
-	try {
-		Runtime rt = Runtime.getRuntime();
-		rt.exec("cmd.exe /c "+cmdToExecute, null, new File(item.getAbsolutePath()));
-		
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-}
+/*	private void runCommand2(String cmdToExecute) {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			rt.exec("cmd.exe /c "+cmdToExecute, null, new File(item.getAbsolutePath()));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 	
 
 //	private void openJavaFilesInNotepad() {
