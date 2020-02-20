@@ -80,7 +80,8 @@ public class TestCaseMaker extends ManualMarker {
 	public void mark() {
 		try {
 			Runtime rt = Runtime.getRuntime();
-			File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			//File dir = new File("C:\\Users\\krism\\Projects\\Java\\COMP2603Marker");			
+			File dir = new File(".\\COMP2603Marker");			
 			String path = this.getMarksheet().getDirPath(); 
 			rt.exec("cmd.exe /c start test.bat \""+path+"\" RentalConsole.java RentalConsole", null, dir);
 			

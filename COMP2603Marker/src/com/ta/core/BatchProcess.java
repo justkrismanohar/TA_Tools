@@ -75,6 +75,7 @@ public class BatchProcess {
 	}
 	
 	protected static boolean performActionInFileFromStartToEnd(File file, ItemAction action,int startIndex, int endIndex ){
+		System.out.println(startIndex + "  "+ endIndex);
 		return performActionInFileFromStartToEndAndCloseAction(file, action, startIndex, endIndex, new ItemAction() {
 			@Override
 			public boolean doAction(File item) {	
@@ -84,16 +85,18 @@ public class BatchProcess {
 	}
 	
 	protected static boolean performActionInFileFromStartToEndAndCloseAction(File file, ItemAction action,int startIndex, int endIndex, ItemAction close){
-		
+		System.out.println("performActionInFileFromStartToEndAndCloseAction");
 		try {
 			if(file.isDirectory()){
 				int count = startIndex;
 				File[] contents = file.listFiles();
+				System.out.println(file.getAbsolutePath() + " LENGTH: "+contents.length);
 				
 				if (endIndex == -1){
 					//bit messy...but is an internal signal to process all items
 					endIndex = contents.length-1;
 				}
+				System.out.println(endIndex);
 				
 				File item;
 				for(int k = startIndex; k < contents.length && k <= endIndex; k++){
@@ -113,11 +116,13 @@ public class BatchProcess {
             t.printStackTrace();
             return false;
         }	
-		
+		System.out.println("performActionInFileFromStartToEndAndCloseAction  -- returned true");
 		return true;
 	}
 	
 	public static boolean performActionInFile(File file, ItemAction action){
+		System.out.println("performActionInFile");
+		System.out.println(file.getAbsolutePath());
 		return performActionInFileFromStartToEnd(file, action, 0, -1);//internal signal to do all
 	}
 

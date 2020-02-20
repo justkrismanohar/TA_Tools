@@ -21,34 +21,39 @@ import com.ta.sample.InsertHeader;
 public class MarkA2 extends BatchProcess {
 	
     public static void main(String[] args){
+    	System.out.println("this is not working");
 //<<<<<<< HEAD
     	//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
-    	String outputDir = "C:\\Users\\krism\\Downloads\\A2\\9-Missed";
+    	//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\9-Missed";
+    	String outputDir = "C:\\Users\\jlm91\\Desktop\\A2\\Missed";
     	
 //=======
     	
 		String[] archiveFormats = {"zip","rar",".7z"};
 		String[] format = {"java"};
 		
-		String sourceDir = "C:\\Users\\krism\\Downloads\\A2\\submissions";
+		String sourceDir = "C:\\Users\\jlm91\\Desktop\\A2\\submissions";
+		//String sourceDir = "C:\\Users\\krism\\Downloads\\A2\\submissions";
     	//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\output";
     	//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\3-Brave2";
 		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\1-Kris";
     	//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\4-Buggy";
 		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\5-Others";
 		//String outputDir = "C:\\Users\\krism\\Downloads\\A2\\8-Queries-zip";
-		String markSlipDir = "C:\\Users\\krism\\Downloads\\A2\\Markslips";
+		String markSlipDir = "C:\\Users\\jlm91\\Desktop\\A2\\markslips";
 		
 		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
 //>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
     	String markingSlipName = "Assignment_2_Makring_Slip.xlsx";
-    	String testCasesDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2-Test-Student\\src";
+    	//String testCasesDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2-Test-Student\\src";
+    	String testCasesDir = "..\\COMP2603-A2-Test-Student\\src";
 		String masterSheetName = "Master.xlsx";
     	
 		ItemAction validateZip = new ItemAction(){
 
 			@Override
 			public boolean doAction(File item) {
+				System.out.println("validate zip");
 		    	if(item.isDirectory())
 		    		return performActionInFile(item,this);
 		    	else if(isAnAllowedArchive(item.getName(),archiveFormats)){
@@ -62,6 +67,7 @@ public class MarkA2 extends BatchProcess {
 		    	System.out.println(item);
 		    	return false;
 			}
+			
         	
         };
         
@@ -93,6 +99,7 @@ public class MarkA2 extends BatchProcess {
 
 			@Override
 			public boolean doAction(File fileItem) {
+				System.out.println("fileItem : "+fileItem.getAbsolutePath());
 				if(fileItem.isDirectory()){
 					String filename = markingSlipName;
 					MarkingProcess pm = new MarkingProcess(fileItem,filename,"A2");
@@ -103,7 +110,9 @@ public class MarkA2 extends BatchProcess {
 					
 					//reflective checks for methods
 					pm.addMarker(new MarkA2TestCases(testCasesDir));
-					pm.addMarker(new ManualMarker("Additional Comments", "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2\\src\\"+"ac.txt"));
+					//pm.addMarker(new ManualMarker("Additional Comments", "C:\\Users\\krism\\Projects\\Java\\COMP2603-A2\\src\\"+"ac.txt"));
+					System.out.println(System.getProperty("user.dir")); // this prints  C:\Users\jlm91\Documents\GitHub\TA_Tools\COMP2603-A2
+					pm.addMarker(new ManualMarker("Additional Comments", "src\\"+"ac.txt"));
 					pm.markAll();
 					pm.saveMarkingSlip();
 					//should move files to a marked folder so don't accidentally overwrite them

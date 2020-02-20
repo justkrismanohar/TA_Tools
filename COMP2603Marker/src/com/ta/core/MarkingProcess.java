@@ -202,6 +202,7 @@ public class MarkingProcess {
 		if(markingSlip!=null){
 			markingSlip.writeExcelFile();
 		}
+		System.out.println("saving markslip");
 	}
 	
 	public Marksheet getMarkingSlip(){

@@ -18,14 +18,16 @@ public class MarkA1 extends BatchProcess{
 		String[] format = {"java"};
 		//String sourceDir = "C:\\Users\\krism\\Downloads\\Kris";
 		//String sourceDir = "C:\\Users\\krism\\Downloads\\missed";
-		String sourceDir = "C:\\Users\\krism\\Downloads\\moss-special";
+		//String sourceDir = "C:\\Users\\krism\\Downloads\\moss-special";
+		String sourceDir = ".\\output";
 		
-		String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
+		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-test";
+		String outputDir = ".\\output-test-2";
 		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-missed";
 		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output";
 		//String outputDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\output-last";
 		
-		String markSlipDir = "C:\\Users\\krism\\Projects\\Java\\COMP2603Marker\\markslips";
+		String markSlipDir = ".\\markslips";
 		String markingSlipName = "Assignment_1_Makring_Slip-new.xlsx";
 		String masterSheetName = "Master.xlsx";
 		
