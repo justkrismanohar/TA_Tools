@@ -99,6 +99,7 @@ public class MarkA2 extends BatchProcess {
 
 			@Override
 			public boolean doAction(File fileItem) {
+				System.out.println("We are in: ItemAtction markA1: doAction()");
 				System.out.println("fileItem : "+fileItem.getAbsolutePath());
 				if(fileItem.isDirectory()){
 					String filename = markingSlipName;
