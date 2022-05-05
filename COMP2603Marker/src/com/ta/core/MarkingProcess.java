@@ -66,17 +66,17 @@ public class MarkingProcess {
 	}
 	
 	
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	private static List<String> getAllFilesWithExtensionButNotIn(File dir, String extension, Set<String> haveFilenames) {
 		ArrayList<String> out = new ArrayList<String>();
 		
 		File[] contents = dir.listFiles();
-=======
-	private String getAllFilesWithExtensionButNotIn(String extension, Set<String> haveFilenames) {
-		ArrayList<String> out = new ArrayList<String>();
-		
-		File[] contents = item.listFiles();
->>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
+//=======
+//	private String getAllFilesWithExtensionButNotIn(String extension, Set<String> haveFilenames) {
+//		ArrayList<String> out = new ArrayList<String>();
+//		
+//		File[] contents = item.listFiles();
+//>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
 		
 		int endIndex = contents.length-1;
 		
