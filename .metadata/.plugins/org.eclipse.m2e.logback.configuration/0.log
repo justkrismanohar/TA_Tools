@@ -8,6 +8,7 @@
 2019-04-08 12:25:21,442 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2019-04-16 22:43:50,288 [Worker-16] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2019-04-18 05:33:56,890 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+<<<<<<< HEAD
 2019-04-19 20:26:16,714 [Worker-9] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2019-04-24 19:45:44,592 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2019-04-24 23:01:50,058 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
@@ -18,3 +19,6 @@
 2019-05-06 14:04:53,411 [Worker-35: JDI thread evaluations] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/org/apache/poi/poi-ooxml/4.0.1/poi-ooxml-4.0.1-sources.jar
 2019-05-06 14:04:54,228 [Worker-27: Debug Source Lookup] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/poi/poi-ooxml/4.0.1/poi-ooxml-4.0.1-sources.jar
 2019-05-06 14:04:54,303 [Worker-35: JDI thread evaluations] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/org/apache/poi/poi-ooxml/4.0.1/poi-ooxml-4.0.1-sources.jar
+=======
+>>>>>>> 70c22c54adb73f1564c65293065ff971f0520836
+2022-05-04 20:45:48,027 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
